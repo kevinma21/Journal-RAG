@@ -6,6 +6,10 @@
 
 **Date:** September 2026
 
+**Version:** 1.0
+
+**Status:** Approved
+
 # 1. Product Overview
 ## 1.1 Product Summary
 JournalPilot is a multi-tenant, AI-augmented digital journal that transforms personal journal entries into a searchable and conversational personal memory system.
