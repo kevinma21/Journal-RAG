@@ -169,7 +169,7 @@ PostgreSQL stores application data, metadata, relationships, embeddings, and geo
 
 JournalPilot is organized into the following major components:
 
-![Architechture](../../excalidraw/architecture.png)
+![Architechture](../../excalidraw/architecture-high-level.png)
 
 The diagram intentionally separates **media transfer** from the API path. NestJS authorizes the upload and generates a short-lived signed URL; the browser uploads the image directly to storage instead of sending large binary payloads through the NestJS server.
 
