@@ -169,7 +169,7 @@ PostgreSQL stores application data, metadata, relationships, embeddings, and geo
 
 JournalPilot is organized into the following major components:
 
-![Architechture](/excalidraw/architecture.png)
+![Architechture](../../excalidraw/architecture.png)
 
 The diagram intentionally separates **media transfer** from the API path. NestJS authorizes the upload and generates a short-lived signed URL; the browser uploads the image directly to storage instead of sending large binary payloads through the NestJS server.
 
@@ -225,7 +225,7 @@ NestJS should not handle large image binaries during normal uploads.
 
 Instead:
 
-![Upload-diagram](/excalidraw/image-upload.png)
+![Upload-diagram](../../excalidraw/image-upload.png)
 
 ## 5.3 Background Workers
 
@@ -248,7 +248,7 @@ AI functionality should be isolated behind an internal provider abstraction.
 
 Conceptually:
 
-![AI-Service](/excalidraw/ai-service.png)
+![AI-Service](../../excalidraw/ai-service.png)
 
 The rest of the application should not depend directly on provider-specific SDK calls.
 
@@ -487,7 +487,7 @@ Location tagging is optional because users may choose not to provide location in
 
 ## 8.4 Complete Ingestion Pipeline
 
-![Ingestion-pipeline](/excalidraw/ingestion-pipeline.png)
+![Ingestion-pipeline](../../excalidraw/ingestion-pipeline.png)
 
 The original journal entry should remain usable even if AI processing fails. AI processing is an enhancement to the stored memory, not a prerequisite for saving the user's journal data.
 
@@ -591,7 +591,7 @@ The system can use PostGIS to filter entries based on coordinates, regions, or d
 
 JournalPilot combines multiple retrieval dimensions rather than relying on semantic similarity alone.
 
-![hybrid-retrieval](/excalidraw/hybrid-retrieval.png)
+![hybrid-retrieval](../../excalidraw/hybrid-retrieval.png)
 
 The goal is to reduce irrelevant memories before they reach the LLM.
 
