@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 150">
+  <title>JournalPilot</title>
+  <g transform="translate(8,20)">
+    <polygon fill="#FDFDFD" points="50,7 87,27 50,47 13,27"/>
+    <path d="M14 41 L50 61 L86 41" fill="none" stroke="#4E47DD" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M14 61 L50 81 L86 61" fill="none" stroke="#FDFDFD" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="115" y="95" font-family="Arial, Helvetica, sans-serif" font-size="58" font-weight="700" fill="#FDFDFD" letter-spacing="-2">Journal</text>
+  <text x="335" y="95" font-family="Arial, Helvetica, sans-serif" font-size="58" font-weight="700" fill="#4E47DD" letter-spacing="-2">Pilot</text>
+</svg>
