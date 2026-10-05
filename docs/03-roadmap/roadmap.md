@@ -436,12 +436,12 @@ Create the repository, applications, development environment, database foundatio
 
 ### Repository
 
-- [ ] Initialize Git repository
-- [ ] Create GitHub repository
-- [ ] Establish branch strategy
-- [ ] Create README
-- [ ] Create `.gitignore`
-- [ ] Create `.env.example`
+- [x] Initialize Git repository
+- [x] Create GitHub repository
+- [x] Establish branch strategy
+- [x] Create README
+- [x] Create `.gitignore`
+- [x] Create `.env.example`
 
 ### Frontend
 
