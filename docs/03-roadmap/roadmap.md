@@ -445,7 +445,7 @@ Create the repository, applications, development environment, database foundatio
 
 ### Frontend
 
-- [ ] Initialize Next.js application
+- [x] Initialize Next.js application
 - [ ] Configure TypeScript
 - [ ] Enable strict mode
 - [ ] Configure Tailwind CSS
