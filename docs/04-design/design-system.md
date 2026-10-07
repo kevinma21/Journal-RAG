@@ -59,7 +59,7 @@ JournalPilot should feel:
 ### Primary Logo
 
 Use `logo.svg` when both the symbol and wordmark are appropriate.
-![logo](../../assets/full/logo.svg)
+![logo](../../apps/web/public/logo/logo.svg)
 
 Recommended locations:
 
@@ -80,7 +80,7 @@ Use `icon.svg` for compact application surfaces:
 
 ### Branded Symbol
 
-![icon](../../assets/icon/icon-256.png)
+![icon](../../apps/web/public/icon/icon-256.png)
 
 ---
 
