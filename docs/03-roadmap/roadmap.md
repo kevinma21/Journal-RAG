@@ -450,7 +450,7 @@ Create the repository, applications, development environment, database foundatio
 - [x] Enable strict mode
 - [x] Configure Tailwind CSS
 - [x] Establish application layout
-- [ ] Establish frontend folder conventions
+- [x] Establish frontend folder conventions
 
 ### Backend
 
