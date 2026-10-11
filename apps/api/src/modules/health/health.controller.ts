@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 
 import { HealthService } from './health.service.js';
 
@@ -12,5 +12,15 @@ export class HealthController {
     @Get()
     getHealth () {
         return this.healthService.getHealth();
+    }
+
+    @Get('not-found')
+    testNotFound() {
+        throw new NotFoundException('Test resource not found');
+    }
+
+    @Get('error')
+    testError() {
+        throw new InternalServerErrorException('Test internal error');
     }
 }
