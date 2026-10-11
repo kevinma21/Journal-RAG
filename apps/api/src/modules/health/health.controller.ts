@@ -23,4 +23,9 @@ export class HealthController {
     testError() {
         throw new InternalServerErrorException('Test internal error');
     }
+
+    @Get('unknown-error')
+    testUnknownError() {
+        throw new Error('This should not be exposed');
+    }
 }
