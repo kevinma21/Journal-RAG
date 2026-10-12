@@ -459,7 +459,7 @@ Create the repository, applications, development environment, database foundatio
 - [x] Establish module structure
 - [x] Establish API versioning
 - [x] Establish global error handling
-- [ ] Establish request validation
+- [x] Establish request validation
 
 ### Validation
 
