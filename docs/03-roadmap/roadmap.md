@@ -463,7 +463,7 @@ Create the repository, applications, development environment, database foundatio
 
 ### Validation
 
-- [ ] Add Zod
+- [x] Add Zod
 - [ ] Define validation conventions
 - [ ] Validate API input at boundaries
 - [ ] Define shared DTO/schema strategy
