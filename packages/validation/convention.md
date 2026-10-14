@@ -109,3 +109,36 @@ over maintaining seperate schema and interface definitions.
 Schemas should be written so they can be reused by different JournalPilot applications when appropriate.
 
 Wheter a particular schema is shared between fronted, API, or worker is determined by the shared DTO/schema strategy.
+
+## Shared DTO and Schema Strategy
+
+### Ownership
+
+`packages/validation` owns runtime-validated schemas for contracts shared across application boundaries.
+
+Examples include:
+
+- API request inputs
+- API response contracts when runtime validation is useful
+- shared client/server input models
+- uploaded metadata
+- other externally received structured data
+
+### Request DTOs
+
+Request DTOs should be represented by Zod schemas.
+
+The schema is the single source of truth for:
+
+- runtime validation
+- inferred TypeScript input types
+
+Example:
+
+```ts
+export const createJournalSchema = z.object({
+  name: z.string(),
+});
+
+export type CreateJournalInput =
+  z.infer<typeof createJournalSchema>;

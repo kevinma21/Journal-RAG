@@ -466,7 +466,7 @@ Create the repository, applications, development environment, database foundatio
 - [x] Add Zod
 - [x] Define validation conventions
 - [x] Validate API input at boundaries
-- [ ] Define shared DTO/schema strategy
+- [x] Define shared DTO/schema strategy
 
 ### Database
 
