@@ -1,9 +1,27 @@
 {
-    "name": "@journalpilot/validation",
-    "version": "0.0.1",
-    "private": true,
-    "type": "module",
-    "dependencies": {
-        "zod": "^4.6.6"
+  "name": "@journalpilot/validation",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
     }
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "zod": "^4.6.6"
+  },
+  "devDependencies": {
+    "typescript": "^7.0.2"
+  }
 }
