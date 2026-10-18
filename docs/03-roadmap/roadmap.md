@@ -471,7 +471,7 @@ Create the repository, applications, development environment, database foundatio
 ### Database
 
 - [x] Configure PostgreSQL
-- [ ] Enable pgvector
+- [x] Enable pgvector
 - [ ] Enable PostGIS
 - [ ] Configure Prisma
 - [ ] Establish database migration strategy
