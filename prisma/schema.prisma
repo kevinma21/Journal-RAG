@@ -15,3 +15,228 @@ model spatial_ref_sys {
   srtext    String? @db.VarChar(2048)
   proj4text String? @db.VarChar(2048)
 }
+
+enum MediaProcessingStatus {
+  QUEUED
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+enum AIProcessingStatus {
+  QUEUED
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+enum AIJobType {
+  EMBEDDING_GENERATION
+  IMAGE_ANALYSIS
+  IMAGE_METADATA
+  MEMORY_INDEXING
+  WEEKLY_REFLECTION
+}
+
+enum EmbeddingSourceType {
+  JOURNAL_ENTRY
+  MEDIA
+  AI_METADATA
+}
+
+enum MessageRole {
+  USER
+  ASSISTANT
+}
+
+model User {
+  id          String   @id @default(uuid()) @db.Uuid
+  preferences Json?    @db.JsonB
+  createdAt   DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt   DateTime @updatedAt @db.Timestamptz(3)
+
+  journals      Journal[]
+  conversations Conversation[]     @relation("UserConversations")
+  reflections   WeeklyReflection[]
+
+  @@map("users")
+}
+
+model Journal {
+  id          String    @id @default(uuid()) @db.Uuid
+  userId      String    @db.Uuid
+  name        String    @db.VarChar(255)
+  description String?   @db.Text
+  createdAt   DateTime  @default(now()) @db.Timestamptz(3)
+  updatedAt   DateTime  @updatedAt @db.Timestamptz(3)
+  deletedAt   DateTime? @db.Timestamptz(3)
+
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  entries       JournalEntry[]
+  conversations Conversation[] @relation("JournalConversations")
+
+  @@index([userId])
+  @@index([userId, deletedAt])
+  @@map("journals")
+}
+
+model JournalEntry {
+  id         String    @id @default(uuid()) @db.Uuid
+  journalId  String    @db.Uuid
+  title      String?   @db.VarChar(500)
+  content    String    @db.Text
+  occurredAt DateTime  @db.Timestamptz(3)
+  createdAt  DateTime  @default(now()) @db.Timestamptz(3)
+  updatedAt  DateTime  @updatedAt @db.Timestamptz(3)
+  deletedAt  DateTime? @db.Timestamptz(3)
+
+  journal      Journal        @relation(fields: [journalId], references: [id], onDelete: Cascade)
+  media        Media[]
+  location     Location?
+  embeddings   Embedding[]
+  aiProcessing AIProcessing[] @relation("EntryAIProcessing")
+  aiMetadata   AIMetadata[]   @relation("EntryAIMetadata")
+
+  @@index([journalId])
+  @@index([journalId, occurredAt])
+  @@index([journalId, deletedAt])
+  @@map("journal_entries")
+}
+
+model Media {
+  id               String                @id @default(uuid()) @db.Uuid
+  entryId          String                @db.Uuid
+  storagePath      String                @db.Text
+  mimeType         String                @db.VarChar(255)
+  fileName         String?               @db.VarChar(500)
+  fileSize         Int?
+  processingStatus MediaProcessingStatus @default(QUEUED)
+  createdAt        DateTime              @default(now()) @db.Timestamptz(3)
+  deletedAt        DateTime?             @db.Timestamptz(3)
+
+  entry        JournalEntry   @relation(fields: [entryId], references: [id], onDelete: Cascade)
+  aiProcessing AIProcessing[] @relation("MediaAIProcessing")
+  aiMetadata   AIMetadata[]   @relation("MediaAIMetadata")
+
+  @@index([entryId])
+  @@index([entryId, deletedAt])
+  @@map("media")
+}
+
+model Location {
+  id        String                               @id @default(uuid()) @db.Uuid
+  entryId   String                               @unique @db.Uuid
+  latitude  Decimal                              @db.Decimal(9, 6)
+  longitude Decimal                              @db.Decimal(9, 6)
+  placeName String?                              @db.VarChar(500)
+  geometry  Unsupported("geography(Point,4326)")
+  createdAt DateTime                             @default(now()) @db.Timestamptz(3)
+
+  entry JournalEntry @relation(fields: [entryId], references: [id], onDelete: Cascade)
+
+  @@map("locations")
+}
+
+model Embedding {
+  id         String                @id @default(uuid()) @db.Uuid
+  entryId    String                @db.Uuid
+  vector     Unsupported("vector")
+  model      String                @db.VarChar(255)
+  sourceType EmbeddingSourceType
+  createdAt  DateTime              @default(now()) @db.Timestamptz(3)
+  updatedAt  DateTime              @updatedAt @db.Timestamptz(3)
+
+  entry JournalEntry @relation(fields: [entryId], references: [id], onDelete: Cascade)
+
+  @@index([entryId])
+  @@index([entryId, sourceType])
+  @@map("embeddings")
+}
+
+model AIProcessing {
+  id           String             @id @default(uuid()) @db.Uuid
+  entryId      String?            @db.Uuid
+  mediaId      String?            @db.Uuid
+  jobType      AIJobType
+  status       AIProcessingStatus @default(QUEUED)
+  attempts     Int                @default(0)
+  errorMessage String?            @db.Text
+  startedAt    DateTime?          @db.Timestamptz(3)
+  completedAt  DateTime?          @db.Timestamptz(3)
+  createdAt    DateTime           @default(now()) @db.Timestamptz(3)
+
+  entry JournalEntry? @relation("EntryAIProcessing", fields: [entryId], references: [id], onDelete: Cascade)
+  media Media?        @relation("MediaAIProcessing", fields: [mediaId], references: [id], onDelete: Cascade)
+
+  @@index([entryId])
+  @@index([mediaId])
+  @@index([status])
+  @@index([jobType, status])
+  @@map("ai_processing")
+}
+
+model AIMetadata {
+  id           String   @id @default(uuid()) @db.Uuid
+  entryId      String?  @db.Uuid
+  mediaId      String?  @db.Uuid
+  metadataType String   @db.VarChar(100)
+  content      Json     @db.JsonB
+  model        String   @db.VarChar(255)
+  createdAt    DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt    DateTime @updatedAt @db.Timestamptz(3)
+
+  entry JournalEntry? @relation("EntryAIMetadata", fields: [entryId], references: [id], onDelete: Cascade)
+  media Media?        @relation("MediaAIMetadata", fields: [mediaId], references: [id], onDelete: Cascade)
+
+  @@index([entryId])
+  @@index([mediaId])
+  @@index([metadataType])
+  @@map("ai_metadata")
+}
+
+model WeeklyReflection {
+  id          String             @id @default(uuid()) @db.Uuid
+  userId      String             @db.Uuid
+  periodStart DateTime           @db.Date
+  periodEnd   DateTime           @db.Date
+  content     String             @db.Text
+  status      AIProcessingStatus @default(QUEUED)
+  createdAt   DateTime           @default(now()) @db.Timestamptz(3)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([userId, periodStart, periodEnd])
+  @@map("weekly_reflections")
+}
+
+model Conversation {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @db.Uuid
+  journalId String?  @db.Uuid
+  title     String?  @db.VarChar(500)
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+
+  user     User      @relation("UserConversations", fields: [userId], references: [id], onDelete: Cascade)
+  journal  Journal?  @relation("JournalConversations", fields: [journalId], references: [id], onDelete: SetNull)
+  messages Message[]
+
+  @@index([userId])
+  @@index([journalId])
+  @@index([userId, updatedAt])
+  @@map("conversations")
+}
+
+model Message {
+  id             String      @id @default(uuid()) @db.Uuid
+  conversationId String      @db.Uuid
+  role           MessageRole
+  content        String      @db.Text
+  createdAt      DateTime    @default(now()) @db.Timestamptz(3)
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId, createdAt])
+  @@map("messages")
+}
