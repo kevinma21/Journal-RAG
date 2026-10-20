@@ -479,7 +479,7 @@ Create the repository, applications, development environment, database foundatio
 
 ### Supabase
 
-- [ ] Configure Supabase project
+- [x] Configure Supabase project
 - [ ] Configure Supabase Auth
 - [ ] Configure Supabase Storage
 - [ ] Define storage bucket structure
