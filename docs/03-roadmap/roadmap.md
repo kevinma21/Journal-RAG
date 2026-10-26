@@ -487,7 +487,7 @@ Create the repository, applications, development environment, database foundatio
 
 ### Redis / BullMQ
 
-- [ ] Add Redis
+- [x] Add Redis
 - [ ] Add BullMQ
 - [ ] Create worker application/module
 - [ ] Create basic health check job
