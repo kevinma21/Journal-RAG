@@ -1,11 +1,22 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller.js';
-import { AppService } from './app.service.js';
+import { BullModule } from '@nestjs/bullmq';
+
 import { HealthModule } from './modules/health/health.module.js';
 
 @Module({
-  imports: [HealthModule],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    BullModule.forRoot({
+      connection: {
+        host: 'localhost',
+        port: 6379,
+      },
+    }),
+
+    BullModule.registerQueue({
+      name: 'system',
+    }),
+
+    HealthModule,
+  ],
 })
 export class AppModule {}
