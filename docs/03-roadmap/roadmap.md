@@ -490,7 +490,7 @@ Create the repository, applications, development environment, database foundatio
 - [x] Add Redis
 - [x] Add BullMQ
 - [x] Create worker application/module
-- [ ] Create basic health check job
+- [x] Create basic health check job
 - [ ] Define job naming conventions
 
 ### Docker
