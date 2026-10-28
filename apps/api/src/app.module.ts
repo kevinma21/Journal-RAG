@@ -12,10 +12,6 @@ import { HealthModule } from './modules/health/health.module.js';
       },
     }),
 
-    BullModule.registerQueue({
-      name: 'system',
-    }),
-
     HealthModule,
   ],
 })
