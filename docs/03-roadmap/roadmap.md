@@ -491,7 +491,7 @@ Create the repository, applications, development environment, database foundatio
 - [x] Add BullMQ
 - [x] Create worker application/module
 - [x] Create basic health check job
-- [ ] Define job naming conventions
+- [x] Define job naming conventions
 
 ### Docker
 

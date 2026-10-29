@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectQueue } from '@nestjs/bullmq';
 import { Queue } from 'bullmq';
+import { JOB_NAMES } from '@journalpilot/shared';
 
 @Injectable()
 export class HealthService {
@@ -18,7 +19,7 @@ export class HealthService {
 
   async enqueueHealthCheck() {
     const job = await this.systemQueue.add(
-      'health-check',
+        JOB_NAMES.HEALTH_CHECK,
       {
         requestedAt: new Date().toISOString(),
       },
