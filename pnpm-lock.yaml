@@ -17,6 +17,9 @@ importers:
 
   apps/api:
     dependencies:
+      '@journalpilot/shared':
+        specifier: workspace:*
+        version: link:../../packages/shared
       '@journalpilot/validation':
         specifier: workspace:*
         version: link:../../packages/validation
@@ -163,6 +166,9 @@ importers:
 
   apps/worker:
     dependencies:
+      '@journalpilot/shared':
+        specifier: workspace:*
+        version: link:../../packages/shared
       '@nestjs/bullmq':
         specifier: ^12.0.0
         version: 12.0.0(@nestjs/common@12.1.2(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@12.1.2)(bullmq@6.4.2(ioredis@6.0.0)(pg@8.23.1))
@@ -239,6 +245,12 @@ importers:
       vitest:
         specifier: ^4.1.2
         version: 4.1.11(@types/node@24.19.1)(@vitest/coverage-v8@4.1.11)(vite@8.3.4(@types/node@24.19.1)(jiti@2.7.0))
+
+  packages/shared:
+    devDependencies:
+      typescript:
+        specifier: ^7.0.2
+        version: 7.0.2
 
   packages/validation:
     dependencies:
