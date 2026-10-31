@@ -498,7 +498,7 @@ Create the repository, applications, development environment, database foundatio
 - [x] Create Docker configuration
 - [x] Create Docker Compose configuration
 - [x] Add local Redis
-- [ ] Add local PostgreSQL if using containerized PostgreSQL
+- [x] Add local PostgreSQL if using containerized PostgreSQL  — N/A (native PostgreSQL)
 - [ ] Document local setup
 
 ### API Documentation
