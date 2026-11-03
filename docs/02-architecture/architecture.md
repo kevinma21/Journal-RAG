@@ -110,6 +110,131 @@ The architecture therefore separates:
 
 This allows the expensive AI workload to scale independently when necessary.
 
+## API Response Conventions
+
+JournalPilot uses a consistent JSON response structure for its REST API.
+
+### Successful Responses
+
+Successful responses use a `data` property for the primary result.
+
+```json
+{
+  "data": {}
+}
+```
+
+Example:
+
+```json
+{
+  "data": {
+    "status": "ok",
+    "service": "journalpilot-api"
+  }
+}
+```
+
+### Collection Responses
+
+Collection endpoints return the collection through `data`.
+
+```json
+{
+  "data": []
+}
+```
+
+Paginated collections include pagination metadata.
+
+```json
+{
+  "data": [],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "limit": 20,
+      "total": 100,
+      "totalPages": 5
+    }
+  }
+}
+```
+
+Pagination metadata should only be included when the endpoint is paginated.
+
+### Error Responses
+
+Errors use an `error` property.
+
+```json
+{
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "Request validation failed."
+  }
+}
+```
+
+Validation errors may include field-level details.
+
+```json
+{
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "Request validation failed.",
+    "details": [
+      {
+        "field": "name",
+        "message": "Name is required."
+      }
+    ]
+  }
+}
+```
+
+### Application Error Codes
+
+The initial API error codes are:
+
+| Code | Meaning |
+|---|---|
+| `VALIDATION_ERROR` | Request data is invalid |
+| `UNAUTHORIZED` | Authentication is missing or invalid |
+| `FORBIDDEN` | The authenticated user is not authorized |
+| `NOT_FOUND` | The requested resource does not exist or is inaccessible |
+| `CONFLICT` | The request conflicts with the current resource state |
+| `INTERNAL_ERROR` | Unexpected server-side failure |
+
+### HTTP Status Codes
+
+The API uses standard HTTP status codes for transport-level semantics.
+
+- `200` — successful read, update, or action
+- `201` — resource created
+- `204` — successful operation with no response body
+- `400` — invalid request
+- `401` — unauthenticated
+- `403` — authenticated but not authorized
+- `404` — resource not found
+- `409` — resource or state conflict
+- `500` — unexpected server failure
+
+### Error Sanitization
+
+Internal implementation details must not be exposed through API responses.
+
+Database errors, provider errors, stack traces, and framework-specific exception details should be logged server-side and translated into appropriate client-facing error codes and messages.
+
+### Response Principles
+
+- Keep successful response structure consistent.
+- Use HTTP status codes for transport-level semantics.
+- Use application error codes for stable client-facing error categories.
+- Include validation details only when they help the client correct the request.
+- Do not expose internal implementation details.
+- Do not add response metadata unless it serves a concrete API requirement.
+
 ## 2.6 Avoid Unnecessary Infrastructure
 
 JournalPilot is initially developed by a solo developer. Infrastructure should only be introduced when it solves a real product or engineering requirement.
