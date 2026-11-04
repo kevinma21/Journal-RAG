@@ -509,7 +509,7 @@ Create the repository, applications, development environment, database foundatio
 
 ### Code Quality
 
-- [ ] Configure ESLint
+- [x] Configure ESLint
 - [ ] Configure Prettier
 - [ ] Add formatting scripts
 - [ ] Add lint scripts
