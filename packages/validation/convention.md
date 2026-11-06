@@ -1,19 +1,20 @@
 # JournalPilot Validation Conventions
 
 ## Purpose
- This package contains runtime validation schemas used by JournalPilot applications.
 
- Validation is implemented with zod.
+This package contains runtime validation schemas used by JournalPilot applications.
 
- ## Location
+Validation is implemented with zod.
 
- All reusable validation schemas belong under:
- 
- packages/validation/src
+## Location
 
- Schemas are organized by domain or product capibility.
+All reusable validation schemas belong under:
 
- Example:
+packages/validation/src
+
+Schemas are organized by domain or product capibility.
+
+Example:
 
 ```
  /packages/validation/src/
@@ -24,63 +25,63 @@
  └── conversations/
 ```
 
- ## File Naming
+## File Naming
 
- Schema files use:
+Schema files use:
 
 \<action>-\<resource>.schema.ts
 
- Example:
+Example:
 
- create-journal.schema.ts
- update-query.schema.ts
- list-journal.schema.ts
+create-journal.schema.ts
+update-query.schema.ts
+list-journal.schema.ts
 
- ## Schema Naming
+## Schema Naming
 
- Schema constants use:
+Schema constants use:
 
- \<action>-\<Resource>Schema
+\<action>-\<Resource>Schema
 
- Example:
+Example:
 
- createJournalSchema
- updateEntrySchema
- listJournalSchema
+createJournalSchema
+updateEntrySchema
+listJournalSchema
 
- ## Type Naming
+## Type Naming
 
- Typescript types should be inferred from Zod schemas.
+Typescript types should be inferred from Zod schemas.
 
- Use:
- 
- \<Action>\<Resource>Input
+Use:
 
- Example:
- 
- tyoe CreateJournalInput = z.infer<typeof createJournalInput>;
+\<Action>\<Resource>Input
 
- The Zod schema is the single source of truth for runtime validation and its inferred input type.
+Example:
 
- ## One Schema Per File
+tyoe CreateJournalInput = z.infer<typeof createJournalInput>;
 
- Each schema should normally have its own file.
+The Zod schema is the single source of truth for runtime validation and its inferred input type.
 
- Small reusable primitives may be grouped together when they clearly belong to the same domain.
+## One Schema Per File
 
- ## Responsibility
+Each schema should normally have its own file.
 
- Validation schemas are responsible for validating input shape and input constraints.
+Small reusable primitives may be grouped together when they clearly belong to the same domain.
 
- They must not contain:
+## Responsibility
 
- - database access
- - Prisma or sql queries
- - authentication
- - authorization
- - business logic
- - NestJS controller logic
- - HTTP handling
+Validation schemas are responsible for validating input shape and input constraints.
+
+They must not contain:
+
+- database access
+- Prisma or sql queries
+- authentication
+- authorization
+- business logic
+- NestJS controller logic
+- HTTP handling
 
 ## Framework Independence
 
@@ -140,5 +141,5 @@ export const createJournalSchema = z.object({
   name: z.string(),
 });
 
-export type CreateJournalInput =
-  z.infer<typeof createJournalSchema>;
+export type CreateJournalInput = z.infer<typeof createJournalSchema>;
+```

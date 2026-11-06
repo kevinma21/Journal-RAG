@@ -4,7 +4,6 @@ import { VersioningType, StandardSchemaValidationPipe } from '@nestjs/common';
 import { HttpExceptionFilter } from './common/filters/http-exeception.filter.js';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
-
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
@@ -19,9 +18,9 @@ async function bootstrap() {
   const swaggerDocument = () =>
     SwaggerModule.createDocument(app, swaggerConfig);
 
-    SwaggerModule.setup('docs', app, swaggerDocument, {
-      useGlobalPrefix: true,
-    })
+  SwaggerModule.setup('docs', app, swaggerDocument, {
+    useGlobalPrefix: true,
+  });
 
   app.enableVersioning({
     type: VersioningType.URI,

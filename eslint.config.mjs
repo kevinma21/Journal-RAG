@@ -17,23 +17,16 @@ export default defineConfig([
 
   {
     files: ['**/*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}'],
-    extends: [
-      js.configs.recommended,
-      tseslint.configs.recommended,
-    ],
+    extends: [js.configs.recommended, tseslint.configs.recommended],
   },
 
   {
-    files: [
-      'apps/web/**/*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}',
-    ],
-    extends: [
-      ...nextVitals,
-    ],
+    files: ['apps/web/**/*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}'],
+    extends: [...nextVitals],
     settings: {
-        next: {
-            rootDir: 'apps/web/',
-        },
+      next: {
+        rootDir: 'apps/web/',
+      },
     },
   },
   prettierConfig,

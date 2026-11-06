@@ -1,30 +1,30 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
-  --color-brand-300: #818CF8;
-  --color-brand-400: #6366F1;
-  --color-brand-500: #4F46E5;
-  --color-brand-600: #4338CA;
+  --color-brand-300: #818cf8;
+  --color-brand-400: #6366f1;
+  --color-brand-500: #4f46e5;
+  --color-brand-600: #4338ca;
 
-  --color-bg-base: #0F0C16;
-  --color-bg-primary: #1D1B21;
+  --color-bg-base: #0f0c16;
+  --color-bg-primary: #1d1b21;
   --color-bg-secondary: #292031;
   --color-bg-tertiary: #343948;
-  --color-bg-dark-blue: #07112A;
+  --color-bg-dark-blue: #07112a;
 
-  --color-text-primary: #FDFDFD;
-  --color-text-secondary: #B0AEB5;
-  --color-text-tertiary: #82868E;
+  --color-text-primary: #fdfdfd;
+  --color-text-secondary: #b0aeb5;
+  --color-text-tertiary: #82868e;
   --color-text-inverse: #111827;
 
   --color-border-subtle: #343948;
   --color-border-muted: #292031;
-  --color-border-focus: #6366F1;
+  --color-border-focus: #6366f1;
 
-  --color-success-500: #22C55E;
-  --color-warning-500: #F59E0B;
-  --color-error-500: #EF4444;
-  --color-info-500: #3B82F6;
+  --color-success-500: #22c55e;
+  --color-warning-500: #f59e0b;
+  --color-error-500: #ef4444;
+  --color-info-500: #3b82f6;
 
   --radius-sm: 6px;
   --radius-md: 8px;

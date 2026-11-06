@@ -24,6 +24,7 @@ JournalPilot is an AI-augmented digital journal designed around three core activ
 ---
 
 ## 1.2 Source of the Visual Language
+
 The visual assets establish the following identity:
 
 - Dark-first application interface.
@@ -126,12 +127,12 @@ Color, focus, keyboard navigation, semantic HTML, labels, and reduced-motion sup
 
 ## 4.1.1 Brand Colors
 
-| Token | HEX | RGB | Usage |
-|---|---|---|---|
-| `brand-500` | `#4F46E5` | `79, 70, 229` | Primary brand accent, primary actions, active controls |
-| `brand-600` | `#4338CA` | `67, 56, 202` | Hover / pressed primary controls |
-| `brand-400` | `#6366F1` | `99, 102, 241` | Focus rings, lighter accent surfaces |
-| `brand-300` | `#818CF8` | `129, 140, 248` | Selected indicators on dark surfaces |
+| Token       | HEX       | RGB             | Usage                                                  |
+| ----------- | --------- | --------------- | ------------------------------------------------------ |
+| `brand-500` | `#4F46E5` | `79, 70, 229`   | Primary brand accent, primary actions, active controls |
+| `brand-600` | `#4338CA` | `67, 56, 202`   | Hover / pressed primary controls                       |
+| `brand-400` | `#6366F1` | `99, 102, 241`  | Focus rings, lighter accent surfaces                   |
+| `brand-300` | `#818CF8` | `129, 140, 248` | Selected indicators on dark surfaces                   |
 
 `#4F46E5` is the canonical JournalPilot brand color extracted directly from `journalpilot-symbol-brand.svg`.
 
@@ -149,13 +150,13 @@ Color, focus, keyboard navigation, semantic HTML, labels, and reduced-motion sup
 
 The screenshots establish a dark interface built from multiple near-black and purple-tinted surfaces.
 
-| Token | HEX | RGB | Usage |
-|---|---|---|---|
-| `bg-base` | `#0F0C16` | `15, 12, 22` | Application background |
-| `bg-primary` | `#1D1B21` | `29, 27, 33` | Primary content surface |
-| `bg-secondary` | `#292031` | `41, 32, 49` | Cards, panels, elevated surfaces |
-| `bg-tertiary` | `#343948` | `52, 57, 72` | Stronger controls / borders / selected utility surfaces |
-| `bg-dark-blue` | `#07112A` | `7, 17, 42` | Map / geographic visualization background where applicable |
+| Token          | HEX       | RGB          | Usage                                                      |
+| -------------- | --------- | ------------ | ---------------------------------------------------------- |
+| `bg-base`      | `#0F0C16` | `15, 12, 22` | Application background                                     |
+| `bg-primary`   | `#1D1B21` | `29, 27, 33` | Primary content surface                                    |
+| `bg-secondary` | `#292031` | `41, 32, 49` | Cards, panels, elevated surfaces                           |
+| `bg-tertiary`  | `#343948` | `52, 57, 72` | Stronger controls / borders / selected utility surfaces    |
+| `bg-dark-blue` | `#07112A` | `7, 17, 42`  | Map / geographic visualization background where applicable |
 
 ### Usage Guidelines
 
@@ -177,12 +178,12 @@ Each elevation level should provide enough contrast to establish hierarchy witho
 
 ## 4.1.3 Text Colors
 
-| Token | HEX | RGB | Usage |
-|---|---|---|---|
-| `text-primary` | `#FDFDFD` | `253, 253, 253` | Headings, primary content, important values |
-| `text-secondary` | `#B0AEB5` | `176, 174, 181` | Supporting text, metadata |
-| `text-tertiary` | `#82868E` | `130, 134, 142` | Placeholder / low-emphasis information |
-| `text-inverse` | `#111827` | `17, 24, 39` | Text on light surfaces |
+| Token            | HEX       | RGB             | Usage                                       |
+| ---------------- | --------- | --------------- | ------------------------------------------- |
+| `text-primary`   | `#FDFDFD` | `253, 253, 253` | Headings, primary content, important values |
+| `text-secondary` | `#B0AEB5` | `176, 174, 181` | Supporting text, metadata                   |
+| `text-tertiary`  | `#82868E` | `130, 134, 142` | Placeholder / low-emphasis information      |
+| `text-inverse`   | `#111827` | `17, 24, 39`    | Text on light surfaces                      |
 
 ### Usage Guidelines
 
@@ -195,11 +196,11 @@ Each elevation level should provide enough contrast to establish hierarchy witho
 
 ## 4.1.4 Border Colors
 
-| Token | HEX | RGB | Usage |
-|---|---|---|---|
-| `border-subtle` | `#343948` | `52, 57, 72` | Cards, inputs, dividers |
-| `border-muted` | `#292031` | `41, 32, 49` | Very subtle separation |
-| `border-focus` | `#6366F1` | `99, 102, 241` | Keyboard / input focus |
+| Token           | HEX       | RGB            | Usage                   |
+| --------------- | --------- | -------------- | ----------------------- |
+| `border-subtle` | `#343948` | `52, 57, 72`   | Cards, inputs, dividers |
+| `border-muted`  | `#292031` | `41, 32, 49`   | Very subtle separation  |
+| `border-focus`  | `#6366F1` | `99, 102, 241` | Keyboard / input focus  |
 
 Borders should normally be 1px. Avoid using multiple strong borders around nested surfaces.
 
@@ -209,12 +210,12 @@ Borders should normally be 1px. Avoid using multiple strong borders around neste
 
 Semantic colors should be muted enough to fit the dark JournalPilot interface while retaining sufficient contrast.
 
-| Token | HEX | RGB | Usage |
-|---|---|---|---|
-| `success-500` | `#22C55E` | `34, 197, 94` | Successful save, completed processing |
-| `warning-500` | `#F59E0B` | `245, 158, 11` | Pending, caution, limited data |
-| `error-500` | `#EF4444` | `239, 68, 68` | Errors, destructive actions |
-| `info-500` | `#3B82F6` | `59, 130, 246` | Informational states |
+| Token         | HEX       | RGB            | Usage                                 |
+| ------------- | --------- | -------------- | ------------------------------------- |
+| `success-500` | `#22C55E` | `34, 197, 94`  | Successful save, completed processing |
+| `warning-500` | `#F59E0B` | `245, 158, 11` | Pending, caution, limited data        |
+| `error-500`   | `#EF4444` | `239, 68, 68`  | Errors, destructive actions           |
+| `info-500`    | `#3B82F6` | `59, 130, 246` | Informational states                  |
 
 For dark surfaces, use a low-opacity semantic background rather than placing saturated semantic colors over large areas.
 
@@ -281,7 +282,7 @@ font-family:
   system-ui,
   -apple-system,
   BlinkMacSystemFont,
-  "Segoe UI",
+  'Segoe UI',
   sans-serif;
 ```
 
@@ -291,12 +292,12 @@ Use the same family for headings, body text, controls, metadata, and AI response
 
 ## 4.2.2 Font Weights
 
-| Weight | Value | Usage |
-|---|---:|---|
-| Regular | 400 | Body text, descriptions |
-| Medium | 500 | Labels, metadata, navigation |
-| Semibold | 600 | Buttons, card titles, H3-H5 |
-| Bold | 700 | Major headings, important metrics |
+| Weight   | Value | Usage                             |
+| -------- | ----: | --------------------------------- |
+| Regular  |   400 | Body text, descriptions           |
+| Medium   |   500 | Labels, metadata, navigation      |
+| Semibold |   600 | Buttons, card titles, H3-H5       |
+| Bold     |   700 | Major headings, important metrics |
 
 Avoid using many weights on a single screen.
 
@@ -304,20 +305,20 @@ Avoid using many weights on a single screen.
 
 ## 4.2.3 Type Scale
 
-| Token | Size | Line Height | Weight | Usage |
-|---|---:|---:|---:|---|
-| `display` | 36px | 44px | 700 | Major landing / empty-state heading |
-| `h1` | 32px | 40px | 700 | Page title |
-| `h2` | 24px | 32px | 700 | Major section |
-| `h3` | 20px | 28px | 600 | Card / subsection title |
-| `h4` | 18px | 26px | 600 | Small section heading |
-| `h5` | 16px | 24px | 600 | Component heading |
-| `h6` | 14px | 20px | 600 | Compact heading / label |
-| `body-lg` | 16px | 26px | 400 | Journal content / prominent body |
-| `body` | 14px | 22px | 400 | Default interface text |
-| `body-sm` | 13px | 20px | 400 | Supporting content |
-| `caption` | 12px | 18px | 500 | Metadata, timestamps |
-| `overline` | 11px | 16px | 600 | Rare compact labels |
+| Token      | Size | Line Height | Weight | Usage                               |
+| ---------- | ---: | ----------: | -----: | ----------------------------------- |
+| `display`  | 36px |        44px |    700 | Major landing / empty-state heading |
+| `h1`       | 32px |        40px |    700 | Page title                          |
+| `h2`       | 24px |        32px |    700 | Major section                       |
+| `h3`       | 20px |        28px |    600 | Card / subsection title             |
+| `h4`       | 18px |        26px |    600 | Small section heading               |
+| `h5`       | 16px |        24px |    600 | Component heading                   |
+| `h6`       | 14px |        20px |    600 | Compact heading / label             |
+| `body-lg`  | 16px |        26px |    400 | Journal content / prominent body    |
+| `body`     | 14px |        22px |    400 | Default interface text              |
+| `body-sm`  | 13px |        20px |    400 | Supporting content                  |
+| `caption`  | 12px |        18px |    500 | Metadata, timestamps                |
+| `overline` | 11px |        16px |    600 | Rare compact labels                 |
 
 ### Journal Content
 
@@ -336,19 +337,19 @@ Recommended:
 
 JournalPilot uses a 4px base spacing unit.
 
-| Token | Value |
-|---|---:|
-| `space-1` | 4px |
-| `space-2` | 8px |
-| `space-3` | 12px |
-| `space-4` | 16px |
-| `space-5` | 20px |
-| `space-6` | 24px |
-| `space-8` | 32px |
-| `space-10` | 40px |
-| `space-12` | 48px |
-| `space-16` | 64px |
-| `space-20` | 80px |
+| Token      | Value |
+| ---------- | ----: |
+| `space-1`  |   4px |
+| `space-2`  |   8px |
+| `space-3`  |  12px |
+| `space-4`  |  16px |
+| `space-5`  |  20px |
+| `space-6`  |  24px |
+| `space-8`  |  32px |
+| `space-10` |  40px |
+| `space-12` |  48px |
+| `space-16` |  64px |
+| `space-20` |  80px |
 
 ### Guidelines
 
@@ -364,14 +365,14 @@ Avoid arbitrary values unless required by a specific visual asset.
 
 # 4.4 Border Radius
 
-| Token | Value | Usage |
-|---|---:|---|
-| `radius-sm` | 6px | Compact controls |
-| `radius-md` | 8px | Inputs, buttons |
-| `radius-lg` | 12px | Cards, panels |
-| `radius-xl` | 16px | Large panels, chat window |
-| `radius-2xl` | 20px | Feature surfaces |
-| `radius-full` | 9999px | Pills, avatars, FAB |
+| Token         |  Value | Usage                     |
+| ------------- | -----: | ------------------------- |
+| `radius-sm`   |    6px | Compact controls          |
+| `radius-md`   |    8px | Inputs, buttons           |
+| `radius-lg`   |   12px | Cards, panels             |
+| `radius-xl`   |   16px | Large panels, chat window |
+| `radius-2xl`  |   20px | Feature surfaces          |
+| `radius-full` | 9999px | Pills, avatars, FAB       |
 
 The screenshots use rounded cards and panels as a recurring visual characteristic. Prefer `radius-lg` to `radius-xl` for standard application cards.
 
@@ -381,12 +382,12 @@ The screenshots use rounded cards and panels as a recurring visual characteristi
 
 JournalPilot should use subtle elevation rather than heavy shadows.
 
-| Level | Shadow | Usage |
-|---|---|---|
-| `elevation-0` | none | Base surface |
-| `elevation-1` | `0 1px 2px rgba(0,0,0,.20)` | Cards / small controls |
-| `elevation-2` | `0 8px 24px rgba(0,0,0,.24)` | Dropdowns / popovers |
-| `elevation-3` | `0 16px 40px rgba(0,0,0,.32)` | Modals / chat window |
+| Level         | Shadow                        | Usage                         |
+| ------------- | ----------------------------- | ----------------------------- |
+| `elevation-0` | none                          | Base surface                  |
+| `elevation-1` | `0 1px 2px rgba(0,0,0,.20)`   | Cards / small controls        |
+| `elevation-2` | `0 8px 24px rgba(0,0,0,.24)`  | Dropdowns / popovers          |
+| `elevation-3` | `0 16px 40px rgba(0,0,0,.32)` | Modals / chat window          |
 | `elevation-4` | `0 24px 64px rgba(0,0,0,.40)` | Large overlays where required |
 
 On the dark UI, surface contrast should do most of the visual work. Do not stack large shadows on already elevated cards.
@@ -396,6 +397,7 @@ On the dark UI, surface contrast should do most of the visual work. Do not stack
 # 4.6 Layout
 
 ## 4.6.1 Application Shell
+
 ### Sidebar
 
 Recommended:
@@ -440,12 +442,12 @@ Recommended:
 
 Recommended breakpoints:
 
-| Token | Width |
-|---|---:|
-| `sm` | 640px |
-| `md` | 768px |
-| `lg` | 1024px |
-| `xl` | 1280px |
+| Token |  Width |
+| ----- | -----: |
+| `sm`  |  640px |
+| `md`  |  768px |
+| `lg`  | 1024px |
+| `xl`  | 1280px |
 | `2xl` | 1536px |
 
 ---
@@ -469,14 +471,14 @@ Font: 14px / 600
 
 States:
 
-| State | Treatment |
-|---|---|
-| Default | `brand-500` |
-| Hover | `brand-600` |
-| Active | `brand-600` + slight visual compression |
-| Focus | 2px accessible focus ring |
-| Disabled | Reduced opacity, no pointer interaction |
-| Loading | Preserve width; replace label with loading indicator |
+| State    | Treatment                                            |
+| -------- | ---------------------------------------------------- |
+| Default  | `brand-500`                                          |
+| Hover    | `brand-600`                                          |
+| Active   | `brand-600` + slight visual compression              |
+| Focus    | 2px accessible focus ring                            |
+| Disabled | Reduced opacity, no pointer interaction              |
+| Loading  | Preserve width; replace label with loading indicator |
 
 ---
 
@@ -947,13 +949,13 @@ Icon: 16–18px
 
 States:
 
-| State | Treatment |
-|---|---|
-| Empty input | Disabled / low emphasis |
-| Ready | `brand-500` |
-| Hover | `brand-600` |
-| Sending | Loading indicator |
-| Error | Return to sendable state with error feedback |
+| State       | Treatment                                    |
+| ----------- | -------------------------------------------- |
+| Empty input | Disabled / low emphasis                      |
+| Ready       | `brand-500`                                  |
+| Hover       | `brand-600`                                  |
+| Sending     | Loading indicator                            |
+| Error       | Return to sendable state with error feedback |
 
 ---
 
@@ -1238,29 +1240,29 @@ Example CSS structure:
 
 ```css
 :root {
-  --color-brand-300: #818CF8;
-  --color-brand-400: #6366F1;
-  --color-brand-500: #4F46E5;
-  --color-brand-600: #4338CA;
+  --color-brand-300: #818cf8;
+  --color-brand-400: #6366f1;
+  --color-brand-500: #4f46e5;
+  --color-brand-600: #4338ca;
 
-  --color-bg-base: #0F0C16;
-  --color-bg-primary: #1D1B21;
+  --color-bg-base: #0f0c16;
+  --color-bg-primary: #1d1b21;
   --color-bg-secondary: #292031;
   --color-bg-tertiary: #343948;
 
-  --color-text-primary: #FDFDFD;
-  --color-text-secondary: #B0AEB5;
-  --color-text-tertiary: #82868E;
+  --color-text-primary: #fdfdfd;
+  --color-text-secondary: #b0aeb5;
+  --color-text-tertiary: #82868e;
   --color-text-inverse: #111827;
 
   --color-border-subtle: #343948;
   --color-border-muted: #292031;
-  --color-border-focus: #6366F1;
+  --color-border-focus: #6366f1;
 
-  --color-success-500: #22C55E;
-  --color-warning-500: #F59E0B;
-  --color-error-500: #EF4444;
-  --color-info-500: #3B82F6;
+  --color-success-500: #22c55e;
+  --color-warning-500: #f59e0b;
+  --color-error-500: #ef4444;
+  --color-info-500: #3b82f6;
 
   --radius-sm: 6px;
   --radius-md: 8px;
@@ -1314,27 +1316,27 @@ rather than creating separate unrelated button implementations.
 
 # 15. MVP Design Coverage
 
-| Area | MVP | Post-MVP | Status |
-|---|:---:|:---:|---|
-| Authentication | ✓ | | Defined |
-| Journal Management | ✓ | | Defined |
-| Entry Editor | ✓ | | Defined |
-| Image Upload | ✓ | | Defined |
-| Location | ✓ | | Defined |
-| Timeline | ✓ | | Defined |
-| Calendar | ✓ | | Defined |
-| Places | ✓ | | Defined |
-| Statistics | ✓ | | Defined |
-| AI Chat | ✓ | | Defined |
-| AI Evidence | ✓ | | Defined |
-| AI Processing States | ✓ | | Defined |
-| Weekly Reflection | ✓ | | Defined |
-| Trash / Recovery | ✓ | | Defined |
-| Voice UI | | ✓ | Deferred |
-| Mobile Application | | ✓ | Deferred |
-| Advanced AI Agents | | ✓ | Deferred |
-| Profile Management | | ✓ | Deferred |
-| Settings | | ✓ | Deferred |
+| Area                 | MVP | Post-MVP | Status   |
+| -------------------- | :-: | :------: | -------- |
+| Authentication       |  ✓  |          | Defined  |
+| Journal Management   |  ✓  |          | Defined  |
+| Entry Editor         |  ✓  |          | Defined  |
+| Image Upload         |  ✓  |          | Defined  |
+| Location             |  ✓  |          | Defined  |
+| Timeline             |  ✓  |          | Defined  |
+| Calendar             |  ✓  |          | Defined  |
+| Places               |  ✓  |          | Defined  |
+| Statistics           |  ✓  |          | Defined  |
+| AI Chat              |  ✓  |          | Defined  |
+| AI Evidence          |  ✓  |          | Defined  |
+| AI Processing States |  ✓  |          | Defined  |
+| Weekly Reflection    |  ✓  |          | Defined  |
+| Trash / Recovery     |  ✓  |          | Defined  |
+| Voice UI             |     |    ✓     | Deferred |
+| Mobile Application   |     |    ✓     | Deferred |
+| Advanced AI Agents   |     |    ✓     | Deferred |
+| Profile Management   |     |    ✓     | Deferred |
+| Settings             |     |    ✓     | Deferred |
 
 ---
 

@@ -7,9 +7,7 @@ export class SystemProcessor extends WorkerHost {
   private readonly logger = new Logger(SystemProcessor.name);
 
   async process(job: Job): Promise<unknown> {
-    this.logger.log(
-      `Processing job ${job.id}: ${job.name}`,
-    );
+    this.logger.log(`Processing job ${job.id}: ${job.name}`);
 
     if (job.name === 'health-check') {
       const result = {
@@ -17,9 +15,7 @@ export class SystemProcessor extends WorkerHost {
         processedAt: new Date().toISOString(),
       };
 
-      this.logger.log(
-        `Health check completed for job ${job.id}`,
-      );
+      this.logger.log(`Health check completed for job ${job.id}`);
 
       return result;
     }

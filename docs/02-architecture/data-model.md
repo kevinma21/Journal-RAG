@@ -3,7 +3,7 @@
 **Project:** JournalPilot  
 **Document:** Data Model  
 **Version:** 1.0  
-**Status:** Approved 
+**Status:** Approved
 **Date:** October 2026  
 **Author:** Kevin Pratama
 
@@ -102,19 +102,19 @@ Journal Entry
 
 # 3. Entity Overview
 
-| Entity | Purpose | Primary Storage |
-|---|---|---|
-| User | Owner of personal JournalPilot data | Supabase Auth / PostgreSQL |
-| Journal | Container for journal entries | PostgreSQL |
-| Journal Entry | Core personal memory | PostgreSQL |
-| Media | Metadata for images/files attached to entries | PostgreSQL |
-| Location | Geospatial information associated with an entry | PostgreSQL + PostGIS |
-| Embedding | Vector representation for semantic retrieval | PostgreSQL + pgvector |
-| AI Processing | Persistent state for asynchronous AI processing | PostgreSQL |
-| AI Metadata | AI-derived information about journal content/media | PostgreSQL |
-| Weekly Reflection | Generated reflection over a time period | PostgreSQL |
-| Conversation | AI chat session | PostgreSQL |
-| Message | Individual user/assistant message | PostgreSQL |
+| Entity            | Purpose                                            | Primary Storage            |
+| ----------------- | -------------------------------------------------- | -------------------------- |
+| User              | Owner of personal JournalPilot data                | Supabase Auth / PostgreSQL |
+| Journal           | Container for journal entries                      | PostgreSQL                 |
+| Journal Entry     | Core personal memory                               | PostgreSQL                 |
+| Media             | Metadata for images/files attached to entries      | PostgreSQL                 |
+| Location          | Geospatial information associated with an entry    | PostgreSQL + PostGIS       |
+| Embedding         | Vector representation for semantic retrieval       | PostgreSQL + pgvector      |
+| AI Processing     | Persistent state for asynchronous AI processing    | PostgreSQL                 |
+| AI Metadata       | AI-derived information about journal content/media | PostgreSQL                 |
+| Weekly Reflection | Generated reflection over a time period            | PostgreSQL                 |
+| Conversation      | AI chat session                                    | PostgreSQL                 |
+| Message           | Individual user/assistant message                  | PostgreSQL                 |
 
 Main relationship:
 
@@ -150,11 +150,11 @@ Authentication identity is managed through Supabase Auth. Application-specific u
 
 ### Key Attributes
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| id | UUID | Yes | Unique user identifier |
-| created_at | Timestamp | Yes | Account creation timestamp |
-| updated_at | Timestamp | Yes | Last profile update |
+| Field       | Type                 | Required | Description                             |
+| ----------- | -------------------- | -------- | --------------------------------------- |
+| id          | UUID                 | Yes      | Unique user identifier                  |
+| created_at  | Timestamp            | Yes      | Account creation timestamp              |
+| updated_at  | Timestamp            | Yes      | Last profile update                     |
 | preferences | JSON/structured data | Optional | User-specific preferences when required |
 
 ### Relationships
@@ -173,15 +173,15 @@ Represents a logical collection of journal entries.
 
 ### Key Attributes
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| id | UUID | Yes | Unique journal identifier |
-| user_id | UUID | Yes | Owner of the journal |
-| name | String | Yes | Journal name |
-| description | Text | Optional | Journal description |
-| created_at | Timestamp | Yes | Creation timestamp |
-| updated_at | Timestamp | Yes | Last update timestamp |
-| deleted_at | Timestamp | Optional | Soft-delete timestamp |
+| Field       | Type      | Required | Description               |
+| ----------- | --------- | -------- | ------------------------- |
+| id          | UUID      | Yes      | Unique journal identifier |
+| user_id     | UUID      | Yes      | Owner of the journal      |
+| name        | String    | Yes      | Journal name              |
+| description | Text      | Optional | Journal description       |
+| created_at  | Timestamp | Yes      | Creation timestamp        |
+| updated_at  | Timestamp | Yes      | Last update timestamp     |
+| deleted_at  | Timestamp | Optional | Soft-delete timestamp     |
 
 ### Relationships
 
@@ -206,16 +206,16 @@ The journal entry is the primary source of truth for the user's written experien
 
 ### Key Attributes
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| id | UUID | Yes | Unique entry identifier |
-| journal_id | UUID | Yes | Parent journal |
-| title | String | Optional | Entry title |
-| content | Text / Rich Text | Yes | Journal content |
-| occurred_at | Timestamp | Yes | Time the experience occurred |
-| created_at | Timestamp | Yes | Record creation timestamp |
-| updated_at | Timestamp | Yes | Last update timestamp |
-| deleted_at | Timestamp | Optional | Soft-delete timestamp |
+| Field       | Type             | Required | Description                  |
+| ----------- | ---------------- | -------- | ---------------------------- |
+| id          | UUID             | Yes      | Unique entry identifier      |
+| journal_id  | UUID             | Yes      | Parent journal               |
+| title       | String           | Optional | Entry title                  |
+| content     | Text / Rich Text | Yes      | Journal content              |
+| occurred_at | Timestamp        | Yes      | Time the experience occurred |
+| created_at  | Timestamp        | Yes      | Record creation timestamp    |
+| updated_at  | Timestamp        | Yes      | Last update timestamp        |
+| deleted_at  | Timestamp        | Optional | Soft-delete timestamp        |
 
 ### Relationships
 
@@ -244,17 +244,17 @@ The raw media binary is stored in Supabase Storage.
 
 ### Key Attributes
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| id | UUID | Yes | Unique media identifier |
-| entry_id | UUID | Yes | Parent journal entry |
-| storage_path | String | Yes | Path/reference to object storage |
-| mime_type | String | Yes | Media MIME type |
-| file_name | String | Optional | Original/display filename |
-| file_size | Integer | Optional | File size |
-| processing_status | Enum | Yes | AI processing state |
-| created_at | Timestamp | Yes | Upload/record creation timestamp |
-| deleted_at | Timestamp | Optional | Deletion timestamp |
+| Field             | Type      | Required | Description                      |
+| ----------------- | --------- | -------- | -------------------------------- |
+| id                | UUID      | Yes      | Unique media identifier          |
+| entry_id          | UUID      | Yes      | Parent journal entry             |
+| storage_path      | String    | Yes      | Path/reference to object storage |
+| mime_type         | String    | Yes      | Media MIME type                  |
+| file_name         | String    | Optional | Original/display filename        |
+| file_size         | Integer   | Optional | File size                        |
+| processing_status | Enum      | Yes      | AI processing state              |
+| created_at        | Timestamp | Yes      | Upload/record creation timestamp |
+| deleted_at        | Timestamp | Optional | Deletion timestamp               |
 
 ### Relationships
 
@@ -274,15 +274,15 @@ Location is optional.
 
 ### Key Attributes
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| id | UUID | Yes | Unique location identifier |
-| entry_id | UUID | Yes | Associated journal entry |
-| latitude | Numeric | Yes | Latitude |
-| longitude | Numeric | Yes | Longitude |
-| place_name | String | Optional | Human-readable place name |
-| geometry | Geography/Geometry | Yes | PostGIS spatial representation |
-| created_at | Timestamp | Yes | Record creation timestamp |
+| Field      | Type               | Required | Description                    |
+| ---------- | ------------------ | -------- | ------------------------------ |
+| id         | UUID               | Yes      | Unique location identifier     |
+| entry_id   | UUID               | Yes      | Associated journal entry       |
+| latitude   | Numeric            | Yes      | Latitude                       |
+| longitude  | Numeric            | Yes      | Longitude                      |
+| place_name | String             | Optional | Human-readable place name      |
+| geometry   | Geography/Geometry | Yes      | PostGIS spatial representation |
+| created_at | Timestamp          | Yes      | Record creation timestamp      |
 
 ### Relationships
 
@@ -305,15 +305,15 @@ Represents a vector embedding used for semantic retrieval.
 
 ### Key Attributes
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| id | UUID | Yes | Unique embedding identifier |
-| entry_id | UUID | Yes | Source journal entry |
-| vector | Vector | Yes | Embedding vector |
-| model | String | Yes | Embedding model used |
-| source_type | Enum | Yes | Content represented by the embedding |
-| created_at | Timestamp | Yes | Generation timestamp |
-| updated_at | Timestamp | Yes | Last regeneration timestamp |
+| Field       | Type      | Required | Description                          |
+| ----------- | --------- | -------- | ------------------------------------ |
+| id          | UUID      | Yes      | Unique embedding identifier          |
+| entry_id    | UUID      | Yes      | Source journal entry                 |
+| vector      | Vector    | Yes      | Embedding vector                     |
+| model       | String    | Yes      | Embedding model used                 |
+| source_type | Enum      | Yes      | Content represented by the embedding |
+| created_at  | Timestamp | Yes      | Generation timestamp                 |
+| updated_at  | Timestamp | Yes      | Last regeneration timestamp          |
 
 ### Storage
 
@@ -351,18 +351,18 @@ Examples:
 
 ### Key Attributes
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| id | UUID | Yes | Unique processing record |
-| entry_id | UUID | Optional | Related entry |
-| media_id | UUID | Optional | Related media |
-| job_type | Enum | Yes | Type of AI processing |
-| status | Enum | Yes | Current processing state |
-| attempts | Integer | Yes | Number of attempts |
-| error_message | Text | Optional | Failure information |
-| started_at | Timestamp | Optional | Processing start |
-| completed_at | Timestamp | Optional | Processing completion |
-| created_at | Timestamp | Yes | Job record creation |
+| Field         | Type      | Required | Description              |
+| ------------- | --------- | -------- | ------------------------ |
+| id            | UUID      | Yes      | Unique processing record |
+| entry_id      | UUID      | Optional | Related entry            |
+| media_id      | UUID      | Optional | Related media            |
+| job_type      | Enum      | Yes      | Type of AI processing    |
+| status        | Enum      | Yes      | Current processing state |
+| attempts      | Integer   | Yes      | Number of attempts       |
+| error_message | Text      | Optional | Failure information      |
+| started_at    | Timestamp | Optional | Processing start         |
+| completed_at  | Timestamp | Optional | Processing completion    |
+| created_at    | Timestamp | Yes      | Job record creation      |
 
 ### Processing Lifecycle
 
@@ -407,16 +407,16 @@ Examples:
 
 ### Key Attributes
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| id | UUID | Yes | Unique metadata identifier |
-| entry_id | UUID | Optional | Related journal entry |
-| media_id | UUID | Optional | Related media |
-| metadata_type | Enum/String | Yes | Type of generated metadata |
-| content | JSON/Text | Yes | Generated information |
-| model | String | Yes | AI model used |
-| created_at | Timestamp | Yes | Generation timestamp |
-| updated_at | Timestamp | Yes | Last update |
+| Field         | Type        | Required | Description                |
+| ------------- | ----------- | -------- | -------------------------- |
+| id            | UUID        | Yes      | Unique metadata identifier |
+| entry_id      | UUID        | Optional | Related journal entry      |
+| media_id      | UUID        | Optional | Related media              |
+| metadata_type | Enum/String | Yes      | Type of generated metadata |
+| content       | JSON/Text   | Yes      | Generated information      |
+| model         | String      | Yes      | AI model used              |
+| created_at    | Timestamp   | Yes      | Generation timestamp       |
+| updated_at    | Timestamp   | Yes      | Last update                |
 
 AI-generated metadata is derived data and must not replace original journal content or media.
 
@@ -430,15 +430,15 @@ Represents an AI-generated reflection over a defined period of journal activity.
 
 ### Key Attributes
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| id | UUID | Yes | Unique reflection identifier |
-| user_id | UUID | Yes | Reflection owner |
-| period_start | Date | Yes | Start of reflection period |
-| period_end | Date | Yes | End of reflection period |
-| content | Text | Yes | Generated reflection |
-| status | Enum | Yes | Generation state |
-| created_at | Timestamp | Yes | Creation timestamp |
+| Field        | Type      | Required | Description                  |
+| ------------ | --------- | -------- | ---------------------------- |
+| id           | UUID      | Yes      | Unique reflection identifier |
+| user_id      | UUID      | Yes      | Reflection owner             |
+| period_start | Date      | Yes      | Start of reflection period   |
+| period_end   | Date      | Yes      | End of reflection period     |
+| content      | Text      | Yes      | Generated reflection         |
+| status       | Enum      | Yes      | Generation state             |
+| created_at   | Timestamp | Yes      | Creation timestamp           |
 
 ### Relationships
 
@@ -461,14 +461,14 @@ Represents an AI chat session in which the user asks questions about their memor
 
 ### Key Attributes
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| id | UUID | Yes | Unique conversation identifier |
-| user_id | UUID | Yes | Conversation owner |
-| journal_id | UUID | Optional | Journal scope when applicable |
-| title | String | Optional | Conversation title |
-| created_at | Timestamp | Yes | Creation timestamp |
-| updated_at | Timestamp | Yes | Last activity |
+| Field      | Type      | Required | Description                    |
+| ---------- | --------- | -------- | ------------------------------ |
+| id         | UUID      | Yes      | Unique conversation identifier |
+| user_id    | UUID      | Yes      | Conversation owner             |
+| journal_id | UUID      | Optional | Journal scope when applicable  |
+| title      | String    | Optional | Conversation title             |
+| created_at | Timestamp | Yes      | Creation timestamp             |
+| updated_at | Timestamp | Yes      | Last activity                  |
 
 ### Relationships
 
@@ -486,13 +486,13 @@ Represents an individual message within a conversation.
 
 ### Key Attributes
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| id | UUID | Yes | Unique message identifier |
-| conversation_id | UUID | Yes | Parent conversation |
-| role | Enum | Yes | User or assistant |
-| content | Text | Yes | Message content |
-| created_at | Timestamp | Yes | Message timestamp |
+| Field           | Type      | Required | Description               |
+| --------------- | --------- | -------- | ------------------------- |
+| id              | UUID      | Yes      | Unique message identifier |
+| conversation_id | UUID      | Yes      | Parent conversation       |
+| role            | Enum      | Yes      | User or assistant         |
+| content         | Text      | Yes      | Message content           |
+| created_at      | Timestamp | Yes      | Message timestamp         |
 
 ### Relationships
 
@@ -549,6 +549,7 @@ Conversation
 ```
 
 ## 7.3 AI Processing Relationship
+
 ```text
 Journal Entry
  ├── 0:N → AI Processing
@@ -814,21 +815,21 @@ The original journal entry remains the source of truth while these representatio
 
 ## 11.1 Storage Responsibilities
 
-| Data | Storage |
-|---|---|
-| Authentication identity | Supabase Auth |
-| Application user data | PostgreSQL |
-| Journals | PostgreSQL |
-| Journal entries | PostgreSQL |
-| Media metadata | PostgreSQL |
-| Image binaries | Supabase Storage |
-| Embeddings | PostgreSQL + pgvector |
-| Geospatial data | PostgreSQL + PostGIS |
-| Conversations | PostgreSQL |
-| Messages | PostgreSQL |
-| Weekly reflections | PostgreSQL |
-| Persistent AI processing state | PostgreSQL |
-| Queue infrastructure | Redis + BullMQ |
+| Data                           | Storage               |
+| ------------------------------ | --------------------- |
+| Authentication identity        | Supabase Auth         |
+| Application user data          | PostgreSQL            |
+| Journals                       | PostgreSQL            |
+| Journal entries                | PostgreSQL            |
+| Media metadata                 | PostgreSQL            |
+| Image binaries                 | Supabase Storage      |
+| Embeddings                     | PostgreSQL + pgvector |
+| Geospatial data                | PostgreSQL + PostGIS  |
+| Conversations                  | PostgreSQL            |
+| Messages                       | PostgreSQL            |
+| Weekly reflections             | PostgreSQL            |
+| Persistent AI processing state | PostgreSQL            |
+| Queue infrastructure           | Redis + BullMQ        |
 
 PostgreSQL remains the authoritative application data store. Redis is infrastructure for asynchronous processing and is not the source of truth for journal data.
 

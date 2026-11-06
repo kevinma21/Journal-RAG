@@ -105,19 +105,19 @@ The roadmap distinguishes between:
 
 ## 2.1 Application Stack
 
-| Area | Technology | Role | Priority |
-|---|---|---|---|
-| Frontend | Next.js | Web application | Core |
-| Frontend language | TypeScript | Type-safe application code | Core |
-| Backend | NestJS | REST API and application backend | Core |
-| Runtime | Node.js | Frontend/backend runtime | Core |
-| API validation | Zod | Runtime schema validation at application boundaries | Recommended |
-| API documentation | Swagger / OpenAPI | API documentation and testing | Recommended |
-| ORM | Prisma | Type-safe relational database access | Recommended |
-| SQL | PostgreSQL SQL | Relational queries, extensions, migrations where needed | Core |
-| Styling | Tailwind CSS | UI styling | Recommended |
-| UI components | Accessible component primitives | Reusable UI components | Recommended |
-| Rich text | Markdown / Markdown parser | Journal content representation | Core |
+| Area              | Technology                      | Role                                                    | Priority    |
+| ----------------- | ------------------------------- | ------------------------------------------------------- | ----------- |
+| Frontend          | Next.js                         | Web application                                         | Core        |
+| Frontend language | TypeScript                      | Type-safe application code                              | Core        |
+| Backend           | NestJS                          | REST API and application backend                        | Core        |
+| Runtime           | Node.js                         | Frontend/backend runtime                                | Core        |
+| API validation    | Zod                             | Runtime schema validation at application boundaries     | Recommended |
+| API documentation | Swagger / OpenAPI               | API documentation and testing                           | Recommended |
+| ORM               | Prisma                          | Type-safe relational database access                    | Recommended |
+| SQL               | PostgreSQL SQL                  | Relational queries, extensions, migrations where needed | Core        |
+| Styling           | Tailwind CSS                    | UI styling                                              | Recommended |
+| UI components     | Accessible component primitives | Reusable UI components                                  | Recommended |
+| Rich text         | Markdown / Markdown parser      | Journal content representation                          | Core        |
 
 ### Prisma and PostgreSQL extensions
 
@@ -131,12 +131,12 @@ Do not force every database operation through the ORM.
 
 ## 2.2 Authentication and Storage
 
-| Technology | Role | Priority |
-|---|---|---|
-| Supabase Auth | User authentication and identity | Core |
-| Supabase Storage | Image/media object storage | Core |
-| Signed URLs | Secure direct media upload/download | Core |
-| PostgreSQL | Application data | Core |
+| Technology       | Role                                | Priority |
+| ---------------- | ----------------------------------- | -------- |
+| Supabase Auth    | User authentication and identity    | Core     |
+| Supabase Storage | Image/media object storage          | Core     |
+| Signed URLs      | Secure direct media upload/download | Core     |
+| PostgreSQL       | Application data                    | Core     |
 
 Authentication identity must come from the authenticated server context.
 
@@ -146,13 +146,13 @@ The API must never trust an arbitrary `user_id` sent by the client.
 
 ## 2.3 Database and Search
 
-| Technology | Role | Priority |
-|---|---|---|
-| PostgreSQL | Authoritative application data store | Core |
-| pgvector | Vector embeddings and semantic retrieval | Core |
-| PostGIS | Location/geospatial queries | Core |
-| PostgreSQL indexes | Query performance | Core |
-| Full-text search / PostgreSQL text search | Optional lexical retrieval support | Recommended |
+| Technology                                | Role                                     | Priority    |
+| ----------------------------------------- | ---------------------------------------- | ----------- |
+| PostgreSQL                                | Authoritative application data store     | Core        |
+| pgvector                                  | Vector embeddings and semantic retrieval | Core        |
+| PostGIS                                   | Location/geospatial queries              | Core        |
+| PostgreSQL indexes                        | Query performance                        | Core        |
+| Full-text search / PostgreSQL text search | Optional lexical retrieval support       | Recommended |
 
 PostgreSQL remains the source of truth.
 
@@ -162,11 +162,11 @@ Redis is not a source of truth.
 
 ## 2.4 Background Processing
 
-| Technology | Role | Priority |
-|---|---|---|
-| Redis | Queue/cache infrastructure | Core |
-| BullMQ | Background job queue | Core |
-| NestJS worker | AI ingestion and asynchronous processing | Core |
+| Technology    | Role                                     | Priority |
+| ------------- | ---------------------------------------- | -------- |
+| Redis         | Queue/cache infrastructure               | Core     |
+| BullMQ        | Background job queue                     | Core     |
+| NestJS worker | AI ingestion and asynchronous processing | Core     |
 
 Typical flow:
 
@@ -192,15 +192,15 @@ PostgreSQL
 
 ## 2.5 AI Stack
 
-| Technology | Role | Priority |
-|---|---|---|
-| AI Provider Abstraction | Prevent provider lock-in | Core |
-| OpenAI | LLM / embeddings / multimodal processing where selected | Core provider |
-| Gemini | Alternative AI provider | Optional provider |
-| Embeddings | Semantic memory representation | Core |
-| LLM | Chat and reflection generation | Core |
-| Vision-capable model | Image understanding | Core for multimodal AI |
-| Structured JSON output | Reliable AI metadata | Recommended |
+| Technology              | Role                                                    | Priority               |
+| ----------------------- | ------------------------------------------------------- | ---------------------- |
+| AI Provider Abstraction | Prevent provider lock-in                                | Core                   |
+| OpenAI                  | LLM / embeddings / multimodal processing where selected | Core provider          |
+| Gemini                  | Alternative AI provider                                 | Optional provider      |
+| Embeddings              | Semantic memory representation                          | Core                   |
+| LLM                     | Chat and reflection generation                          | Core                   |
+| Vision-capable model    | Image understanding                                     | Core for multimodal AI |
+| Structured JSON output  | Reliable AI metadata                                    | Recommended            |
 
 The application should depend on an internal interface such as:
 
@@ -218,15 +218,15 @@ The rest of the application should not directly depend on provider-specific SDK 
 
 ## 2.6 Development and Infrastructure
 
-| Technology | Role | Priority |
-|---|---|---|
-| Docker | Reproducible local infrastructure | Core |
-| Docker Compose | Local service orchestration | Core |
-| Supabase CLI | Local Supabase development when useful | Recommended |
-| Git | Version control | Core |
-| GitHub | Repository and collaboration | Recommended |
-| Environment variables | Secrets/configuration | Core |
-| `.env.example` | Document required configuration | Core |
+| Technology            | Role                                   | Priority    |
+| --------------------- | -------------------------------------- | ----------- |
+| Docker                | Reproducible local infrastructure      | Core        |
+| Docker Compose        | Local service orchestration            | Core        |
+| Supabase CLI          | Local Supabase development when useful | Recommended |
+| Git                   | Version control                        | Core        |
+| GitHub                | Repository and collaboration           | Recommended |
+| Environment variables | Secrets/configuration                  | Core        |
+| `.env.example`        | Document required configuration        | Core        |
 
 Local infrastructure should remain simple.
 
@@ -250,15 +250,15 @@ Do not run both approaches unnecessarily.
 
 ## 2.7 Testing Stack
 
-| Technology | Role | Priority |
-|---|---|---|
-| Vitest or Jest | Unit testing | Recommended |
-| NestJS testing utilities | Backend tests | Core |
-| React Testing Library | Frontend component tests | Recommended |
-| Supertest | API/integration testing | Recommended |
-| Playwright | End-to-end browser testing | Recommended |
-| Test PostgreSQL database | Integration tests | Core |
-| Test Redis instance | Queue tests | Recommended |
+| Technology               | Role                       | Priority    |
+| ------------------------ | -------------------------- | ----------- |
+| Vitest or Jest           | Unit testing               | Recommended |
+| NestJS testing utilities | Backend tests              | Core        |
+| React Testing Library    | Frontend component tests   | Recommended |
+| Supertest                | API/integration testing    | Recommended |
+| Playwright               | End-to-end browser testing | Recommended |
+| Test PostgreSQL database | Integration tests          | Core        |
+| Test Redis instance      | Queue tests                | Recommended |
 
 Testing should focus on behavior and system boundaries rather than implementation details.
 
@@ -266,13 +266,13 @@ Testing should focus on behavior and system boundaries rather than implementatio
 
 ## 2.8 Code Quality
 
-| Technology | Role | Priority |
-|---|---|---|
-| ESLint | Static analysis | Core |
-| Prettier | Formatting | Recommended |
-| TypeScript strict mode | Type safety | Core |
-| Husky | Git hooks | Optional |
-| lint-staged | Run checks on changed files | Optional |
+| Technology             | Role                        | Priority    |
+| ---------------------- | --------------------------- | ----------- |
+| ESLint                 | Static analysis             | Core        |
+| Prettier               | Formatting                  | Recommended |
+| TypeScript strict mode | Type safety                 | Core        |
+| Husky                  | Git hooks                   | Optional    |
+| lint-staged            | Run checks on changed files | Optional    |
 
 Avoid adding tooling simply because it is popular.
 
@@ -280,16 +280,16 @@ Avoid adding tooling simply because it is popular.
 
 ## 2.9 CI/CD and Deployment
 
-| Technology | Role | Priority |
-|---|---|---|
-| GitHub Actions | CI pipeline | Recommended |
-| Production hosting for Next.js | Frontend deployment | Required for release |
-| Production hosting for NestJS | API deployment | Required for release |
-| Worker hosting | BullMQ worker deployment | Required for AI processing |
-| Supabase | Managed PostgreSQL/Auth/Storage | Core |
-| Redis hosting | Production queue infrastructure | Required for AI processing |
-| HTTPS/TLS | Secure communication | Required |
-| Secret management | Production credentials | Required |
+| Technology                     | Role                            | Priority                   |
+| ------------------------------ | ------------------------------- | -------------------------- |
+| GitHub Actions                 | CI pipeline                     | Recommended                |
+| Production hosting for Next.js | Frontend deployment             | Required for release       |
+| Production hosting for NestJS  | API deployment                  | Required for release       |
+| Worker hosting                 | BullMQ worker deployment        | Required for AI processing |
+| Supabase                       | Managed PostgreSQL/Auth/Storage | Core                       |
+| Redis hosting                  | Production queue infrastructure | Required for AI processing |
+| HTTPS/TLS                      | Secure communication            | Required                   |
+| Secret management              | Production credentials          | Required                   |
 
 The exact hosting provider is intentionally not fixed in the roadmap.
 
@@ -299,15 +299,15 @@ The exact hosting provider is intentionally not fixed in the roadmap.
 
 Start simple.
 
-| Technology / Practice | Role | Priority |
-|---|---|---|
-| Structured application logs | Debugging and operations | Core |
-| Request/error logging | API troubleshooting | Core |
-| Job status logging | AI pipeline troubleshooting | Core |
-| Health checks | Service availability | Recommended |
-| Error tracking service | Production error visibility | Recommended |
-| Metrics | Performance and reliability | Later |
-| Distributed tracing | Cross-service tracing | Post-MVP unless needed |
+| Technology / Practice       | Role                        | Priority               |
+| --------------------------- | --------------------------- | ---------------------- |
+| Structured application logs | Debugging and operations    | Core                   |
+| Request/error logging       | API troubleshooting         | Core                   |
+| Job status logging          | AI pipeline troubleshooting | Core                   |
+| Health checks               | Service availability        | Recommended            |
+| Error tracking service      | Production error visibility | Recommended            |
+| Metrics                     | Performance and reliability | Later                  |
+| Distributed tracing         | Cross-service tracing       | Post-MVP unless needed |
 
 Do not introduce a large observability stack before the application needs it.
 
@@ -498,7 +498,7 @@ Create the repository, applications, development environment, database foundatio
 - [x] Create Docker configuration
 - [x] Create Docker Compose configuration
 - [x] Add local Redis
-- [x] Add local PostgreSQL if using containerized PostgreSQL  — N/A (native PostgreSQL)
+- [x] Add local PostgreSQL if using containerized PostgreSQL — N/A (native PostgreSQL)
 - [x] Document local setup
 
 ### API Documentation
@@ -1413,34 +1413,34 @@ The recommended implementation order is:
 
 # 17. Technology Introduction by Phase
 
-| Technology | Phase Introduced | Main Purpose |
-|---|---:|---|
-| Git | 0 | Version control |
-| GitHub | 0 | Repository |
-| Next.js | 0 | Frontend |
-| React | 0 | UI |
-| TypeScript | 0 | Type safety |
-| Tailwind CSS | 0 | Styling |
-| NestJS | 0 | Backend |
-| Zod | 0 | Runtime validation |
-| Swagger/OpenAPI | 0 | API documentation |
-| PostgreSQL | 0 | Primary database |
-| Prisma | 0 | ORM |
-| pgvector | 0 | Vector storage |
-| PostGIS | 0 | Geospatial data |
-| Supabase Auth | 0/1 | Authentication |
-| Supabase Storage | 0/3 | Media storage |
-| Docker | 0 | Local infrastructure |
-| Docker Compose | 0 | Local service orchestration |
-| Redis | 0/4 | Queue infrastructure |
-| BullMQ | 0/4 | Background jobs |
-| OpenAI | 4 | AI processing |
-| Gemini | 4+ | Optional alternative provider |
-| Playwright | 7 | E2E testing |
-| Vitest/Jest | 7 | Unit testing |
-| Supertest | 7 | API integration testing |
-| GitHub Actions | 7 | CI/CD |
-| Error tracking | 7 | Production diagnostics |
+| Technology       | Phase Introduced | Main Purpose                  |
+| ---------------- | ---------------: | ----------------------------- |
+| Git              |                0 | Version control               |
+| GitHub           |                0 | Repository                    |
+| Next.js          |                0 | Frontend                      |
+| React            |                0 | UI                            |
+| TypeScript       |                0 | Type safety                   |
+| Tailwind CSS     |                0 | Styling                       |
+| NestJS           |                0 | Backend                       |
+| Zod              |                0 | Runtime validation            |
+| Swagger/OpenAPI  |                0 | API documentation             |
+| PostgreSQL       |                0 | Primary database              |
+| Prisma           |                0 | ORM                           |
+| pgvector         |                0 | Vector storage                |
+| PostGIS          |                0 | Geospatial data               |
+| Supabase Auth    |              0/1 | Authentication                |
+| Supabase Storage |              0/3 | Media storage                 |
+| Docker           |                0 | Local infrastructure          |
+| Docker Compose   |                0 | Local service orchestration   |
+| Redis            |              0/4 | Queue infrastructure          |
+| BullMQ           |              0/4 | Background jobs               |
+| OpenAI           |                4 | AI processing                 |
+| Gemini           |               4+ | Optional alternative provider |
+| Playwright       |                7 | E2E testing                   |
+| Vitest/Jest      |                7 | Unit testing                  |
+| Supertest        |                7 | API integration testing       |
+| GitHub Actions   |                7 | CI/CD                         |
+| Error tracking   |                7 | Production diagnostics        |
 
 ---
 

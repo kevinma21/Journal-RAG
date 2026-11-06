@@ -10,6 +10,6 @@ import { HealthService } from './health.service.js';
     }),
   ],
   controllers: [HealthController],
-  providers: [HealthService]
+  providers: [HealthService],
 })
 export class HealthModule {}

@@ -144,14 +144,14 @@ These areas may receive their own testing strategy when the corresponding produc
                Static / Type Checks
 ```
 
-| Layer | Main Question |
-|---|---|
-| Static checks | Does the codebase satisfy basic structural/type constraints? |
-| Unit | Does isolated business logic behave correctly? |
-| Integration | Do modules, database access, authorization, and workers work together correctly? |
-| End-to-End | Can a real user complete a critical product journey? |
-| AI Evaluation | Does retrieval and generated output remain relevant and grounded? |
-| Accessibility / UI | Is the user-facing experience usable and accessible? |
+| Layer              | Main Question                                                                    |
+| ------------------ | -------------------------------------------------------------------------------- |
+| Static checks      | Does the codebase satisfy basic structural/type constraints?                     |
+| Unit               | Does isolated business logic behave correctly?                                   |
+| Integration        | Do modules, database access, authorization, and workers work together correctly? |
+| End-to-End         | Can a real user complete a critical product journey?                             |
+| AI Evaluation      | Does retrieval and generated output remain relevant and grounded?                |
+| Accessibility / UI | Is the user-facing experience usable and accessible?                             |
 
 ## 3.2 Test Distribution
 
@@ -1215,14 +1215,14 @@ The project should use tools that fit the actual implementation rather than intr
 
 Initial recommended toolset:
 
-| Area | Tool |
-|---|---|
-| Unit testing | Vitest or Jest |
-| API / integration | Supertest or framework-compatible HTTP testing |
-| Frontend | Testing Library |
-| E2E | Playwright |
-| Accessibility | Automated accessibility checks + manual keyboard testing |
-| CI | GitHub Actions |
+| Area              | Tool                                                     |
+| ----------------- | -------------------------------------------------------- |
+| Unit testing      | Vitest or Jest                                           |
+| API / integration | Supertest or framework-compatible HTTP testing           |
+| Frontend          | Testing Library                                          |
+| E2E               | Playwright                                               |
+| Accessibility     | Automated accessibility checks + manual keyboard testing |
+| CI                | GitHub Actions                                           |
 
 These choices are implementation defaults, not architectural constraints. The final tool selection should be recorded when the corresponding implementation phase begins.
 
@@ -1322,26 +1322,26 @@ A roadmap phase is complete when:
 
 # 20. MVP Testing Coverage
 
-| Area | Unit | Integration | E2E | AI Eval | Accessibility |
-|---|:---:|:---:|:---:|:---:|:---:|
-| Authentication | ✓ | ✓ | ✓ | | ✓ |
-| Journal Management | ✓ | ✓ | ✓ | | ✓ |
-| Journal Entries | ✓ | ✓ | ✓ | | ✓ |
-| Draft / Auto-Save | ✓ | ✓ | ✓ | | ✓ |
-| Image Upload | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Location | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Timeline | ✓ | ✓ | ✓ | | ✓ |
-| Calendar | ✓ | ✓ | ✓ | | ✓ |
-| Places | ✓ | ✓ | ✓ | | ✓ |
-| Statistics | ✓ | ✓ | ✓ | | ✓ |
-| Trash / Recovery | ✓ | ✓ | ✓ | | ✓ |
-| AI Ingestion | ✓ | ✓ | ✓ | ✓ | |
-| Hybrid RAG | ✓ | ✓ | ✓ | ✓ | |
-| AI Chat | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Conversational Follow-ups | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Weekly Reflection | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Tenant Isolation | ✓ | ✓ | ✓ | ✓ | |
-| Security Boundaries | ✓ | ✓ | ✓ | | |
+| Area                      | Unit | Integration | E2E | AI Eval | Accessibility |
+| ------------------------- | :--: | :---------: | :-: | :-----: | :-----------: |
+| Authentication            |  ✓   |      ✓      |  ✓  |         |       ✓       |
+| Journal Management        |  ✓   |      ✓      |  ✓  |         |       ✓       |
+| Journal Entries           |  ✓   |      ✓      |  ✓  |         |       ✓       |
+| Draft / Auto-Save         |  ✓   |      ✓      |  ✓  |         |       ✓       |
+| Image Upload              |  ✓   |      ✓      |  ✓  |    ✓    |       ✓       |
+| Location                  |  ✓   |      ✓      |  ✓  |    ✓    |       ✓       |
+| Timeline                  |  ✓   |      ✓      |  ✓  |         |       ✓       |
+| Calendar                  |  ✓   |      ✓      |  ✓  |         |       ✓       |
+| Places                    |  ✓   |      ✓      |  ✓  |         |       ✓       |
+| Statistics                |  ✓   |      ✓      |  ✓  |         |       ✓       |
+| Trash / Recovery          |  ✓   |      ✓      |  ✓  |         |       ✓       |
+| AI Ingestion              |  ✓   |      ✓      |  ✓  |    ✓    |               |
+| Hybrid RAG                |  ✓   |      ✓      |  ✓  |    ✓    |               |
+| AI Chat                   |  ✓   |      ✓      |  ✓  |    ✓    |       ✓       |
+| Conversational Follow-ups |  ✓   |      ✓      |  ✓  |    ✓    |       ✓       |
+| Weekly Reflection         |  ✓   |      ✓      |  ✓  |    ✓    |       ✓       |
+| Tenant Isolation          |  ✓   |      ✓      |  ✓  |    ✓    |               |
+| Security Boundaries       |  ✓   |      ✓      |  ✓  |         |               |
 
 ---
 

@@ -1187,43 +1187,43 @@ User Views Reflection
 
 # 18. MVP Flow Coverage
 
-| Flow | MVP | Post-MVP | Purpose |
-|---|:---:|:---:|---|
-| Authentication | ✓ | | Account and session access |
-| Google Authentication | ✓ | | Alternative authentication |
-| Journal Management | ✓ | | Organize memories |
-| Entry Management | ✓ | | Record memories |
-| Image Upload | ✓ | | Preserve visual context |
-| Location | ✓ | | Preserve geographic context |
-| Timeline | ✓ | | Browse memories chronologically |
-| Calendar | ✓ | | Explore memories by date |
-| Places | ✓ | | Explore memories by location |
-| Statistics | ✓ | | View basic journal activity |
-| AI Ingestion | ✓ | | Transform entries into searchable memory data |
-| Hybrid RAG | ✓ | | Retrieve memories contextually |
-| AI Chat | ✓ | | Conversational memory retrieval |
-| Conversational Follow-Up | ✓ | | Continue memory exploration |
-| Weekly Reflection | ✓ | | Reflect on recent experiences |
-| Trash / Recovery | ✓ | | Recover deleted entries |
-| Voice Journaling | | ✓ | Deferred |
-| Mobile App | | ✓ | Deferred |
-| Advanced AI Agents | | ✓ | Deferred |
-| Profile Management | | ✓ | Deferred |
-| Settings | | ✓ | Deferred |
-| Subscription / Payment | | ✓ | Deferred |
+| Flow                     | MVP | Post-MVP | Purpose                                       |
+| ------------------------ | :-: | :------: | --------------------------------------------- |
+| Authentication           |  ✓  |          | Account and session access                    |
+| Google Authentication    |  ✓  |          | Alternative authentication                    |
+| Journal Management       |  ✓  |          | Organize memories                             |
+| Entry Management         |  ✓  |          | Record memories                               |
+| Image Upload             |  ✓  |          | Preserve visual context                       |
+| Location                 |  ✓  |          | Preserve geographic context                   |
+| Timeline                 |  ✓  |          | Browse memories chronologically               |
+| Calendar                 |  ✓  |          | Explore memories by date                      |
+| Places                   |  ✓  |          | Explore memories by location                  |
+| Statistics               |  ✓  |          | View basic journal activity                   |
+| AI Ingestion             |  ✓  |          | Transform entries into searchable memory data |
+| Hybrid RAG               |  ✓  |          | Retrieve memories contextually                |
+| AI Chat                  |  ✓  |          | Conversational memory retrieval               |
+| Conversational Follow-Up |  ✓  |          | Continue memory exploration                   |
+| Weekly Reflection        |  ✓  |          | Reflect on recent experiences                 |
+| Trash / Recovery         |  ✓  |          | Recover deleted entries                       |
+| Voice Journaling         |     |    ✓     | Deferred                                      |
+| Mobile App               |     |    ✓     | Deferred                                      |
+| Advanced AI Agents       |     |    ✓     | Deferred                                      |
+| Profile Management       |     |    ✓     | Deferred                                      |
+| Settings                 |     |    ✓     | Deferred                                      |
+| Subscription / Payment   |     |    ✓     | Deferred                                      |
 
 ---
 
 # 19. Flow-to-Product Mapping
 
-| User Goal | Primary Flow | Supporting Flows |
-|---|---|---|
-| Record a memory | Journal Entry | Image, Location |
-| Find an old memory | AI Chat / RAG | Conversational Follow-Up |
-| Explore a time period | Timeline / Calendar | AI Chat / RAG |
-| Explore a location | Places / Location | AI Chat / RAG |
-| Discover patterns | AI Chat / RAG | Weekly Reflection |
-| Reflect on the week | Weekly AI Reflection | AI Ingestion |
+| User Goal             | Primary Flow         | Supporting Flows         |
+| --------------------- | -------------------- | ------------------------ |
+| Record a memory       | Journal Entry        | Image, Location          |
+| Find an old memory    | AI Chat / RAG        | Conversational Follow-Up |
+| Explore a time period | Timeline / Calendar  | AI Chat / RAG            |
+| Explore a location    | Places / Location    | AI Chat / RAG            |
+| Discover patterns     | AI Chat / RAG        | Weekly Reflection        |
+| Reflect on the week   | Weekly AI Reflection | AI Ingestion             |
 
 ---
 

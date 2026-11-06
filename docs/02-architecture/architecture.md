@@ -197,14 +197,14 @@ Validation errors may include field-level details.
 
 The initial API error codes are:
 
-| Code | Meaning |
-|---|---|
-| `VALIDATION_ERROR` | Request data is invalid |
-| `UNAUTHORIZED` | Authentication is missing or invalid |
-| `FORBIDDEN` | The authenticated user is not authorized |
-| `NOT_FOUND` | The requested resource does not exist or is inaccessible |
-| `CONFLICT` | The request conflicts with the current resource state |
-| `INTERNAL_ERROR` | Unexpected server-side failure |
+| Code               | Meaning                                                  |
+| ------------------ | -------------------------------------------------------- |
+| `VALIDATION_ERROR` | Request data is invalid                                  |
+| `UNAUTHORIZED`     | Authentication is missing or invalid                     |
+| `FORBIDDEN`        | The authenticated user is not authorized                 |
+| `NOT_FOUND`        | The requested resource does not exist or is inaccessible |
+| `CONFLICT`         | The request conflicts with the current resource state    |
+| `INTERNAL_ERROR`   | Unexpected server-side failure                           |
 
 ### HTTP Status Codes
 
@@ -1116,19 +1116,19 @@ These metrics are particularly important because RAG is a core product capabilit
 
 The following decisions define the initial architecture.
 
-| Decision | Choice | Reason |
-|---|---|---|
-| Frontend | Next.js | Web application framework for the JournalPilot client |
-| Backend | NestJS | Structured TypeScript backend for API and business logic |
-| Database | PostgreSQL | Relational data plus support for vector and geospatial extensions |
-| Vector search | pgvector | Semantic memory retrieval inside PostgreSQL |
-| Geospatial search | PostGIS | Location-aware memory retrieval |
-| Object storage | Supabase Storage | Media storage without putting image binaries in PostgreSQL |
-| Authentication | Supabase Auth | Managed authentication and OAuth support |
-| Queue | BullMQ | Reliable asynchronous job processing |
-| Queue infrastructure | Redis | BullMQ backend and transient job infrastructure |
-| AI | Provider abstraction | Allows OpenAI/Gemini or other providers to be changed independently |
-| Architecture style | Modular application | Appropriate complexity for a solo developer while keeping boundaries clear |
+| Decision             | Choice               | Reason                                                                     |
+| -------------------- | -------------------- | -------------------------------------------------------------------------- |
+| Frontend             | Next.js              | Web application framework for the JournalPilot client                      |
+| Backend              | NestJS               | Structured TypeScript backend for API and business logic                   |
+| Database             | PostgreSQL           | Relational data plus support for vector and geospatial extensions          |
+| Vector search        | pgvector             | Semantic memory retrieval inside PostgreSQL                                |
+| Geospatial search    | PostGIS              | Location-aware memory retrieval                                            |
+| Object storage       | Supabase Storage     | Media storage without putting image binaries in PostgreSQL                 |
+| Authentication       | Supabase Auth        | Managed authentication and OAuth support                                   |
+| Queue                | BullMQ               | Reliable asynchronous job processing                                       |
+| Queue infrastructure | Redis                | BullMQ backend and transient job infrastructure                            |
+| AI                   | Provider abstraction | Allows OpenAI/Gemini or other providers to be changed independently        |
+| Architecture style   | Modular application  | Appropriate complexity for a solo developer while keeping boundaries clear |
 
 Detailed architectural decisions should be recorded separately as ADRs when implementation begins.
 
@@ -1139,9 +1139,11 @@ Detailed architectural decisions should be recorded separately as ADRs when impl
 ## 18.1 PostgreSQL + pgvector vs Dedicated Vector Database
 
 ### Chosen
+
 PostgreSQL + pgvector.
 
 ### Reason
+
 JournalPilot already needs PostgreSQL for journals, entries, metadata, and relationships. Keeping vector search in the same database reduces infrastructure complexity and simplifies authorization-aware retrieval.
 
 A dedicated vector database can be considered later if scale or retrieval requirements justify it.
@@ -1149,17 +1151,21 @@ A dedicated vector database can be considered later if scale or retrieval requir
 ## 18.2 PostGIS vs External Geospatial Service
 
 ### Chosen
+
 PostGIS.
 
 ### Reason
+
 Location data is directly related to journal entries and can be queried alongside relational and vector data. Using PostGIS avoids introducing a separate geospatial data system during the MVP.
 
 ## 18.3 Direct Storage Upload vs API-Mediated Upload
 
 ### Chosen
+
 Direct browser-to-storage upload using signed URLs.
 
 ### Reason
+
 Images can be large and numerous. Passing image binaries through NestJS unnecessarily consumes API bandwidth and server resources.
 
 NestJS still controls authorization and upload permissions.
@@ -1167,17 +1173,21 @@ NestJS still controls authorization and upload permissions.
 ## 18.4 Background Worker vs Synchronous AI Processing
 
 ### Chosen
+
 Background workers.
 
 ### Reason
+
 AI operations can be slow, expensive, and failure-prone. They should not block normal journal CRUD operations.
 
 ## 18.5 Modular Application vs Microservices
 
 ### Chosen
+
 Modular application.
 
 ### Reason
+
 JournalPilot is initially a solo-developer project with limited development time. Microservices would add deployment, networking, observability, and operational complexity without a demonstrated need.
 
 The internal boundaries still allow selected workloads to be separated later.

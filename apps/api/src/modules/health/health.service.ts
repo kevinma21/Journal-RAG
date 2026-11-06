@@ -18,12 +18,9 @@ export class HealthService {
   }
 
   async enqueueHealthCheck() {
-    const job = await this.systemQueue.add(
-        JOB_NAMES.HEALTH_CHECK,
-      {
-        requestedAt: new Date().toISOString(),
-      },
-    );
+    const job = await this.systemQueue.add(JOB_NAMES.HEALTH_CHECK, {
+      requestedAt: new Date().toISOString(),
+    });
 
     return {
       status: 'queued',
