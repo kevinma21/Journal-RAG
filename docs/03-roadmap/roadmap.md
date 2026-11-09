@@ -538,18 +538,18 @@ Prettier
 
 ## Exit Criteria
 
-- [ ] Frontend starts locally
-- [ ] API starts locally
-- [ ] Worker starts locally
-- [ ] Database connection works
-- [ ] pgvector is available
-- [ ] PostGIS is available
-- [ ] Redis connection works
-- [ ] A BullMQ test job executes
-- [ ] Supabase Auth configuration works
-- [ ] Storage configuration works
-- [ ] Swagger is accessible
-- [ ] Lint/type checks pass
+- [x] Frontend starts locally
+- [x] API starts locally
+- [x] Worker starts locally
+- [x] Database connection works
+- [x] pgvector is available
+- [x] PostGIS is available
+- [x] Redis connection works
+- [x] A BullMQ test job executes
+- [x] Supabase Auth configuration works
+- [x] Storage configuration works
+- [x] Swagger is accessible
+- [x] Lint/type checks pass
 
 ---
 
