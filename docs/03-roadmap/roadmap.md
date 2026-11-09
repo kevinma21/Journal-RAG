@@ -513,7 +513,7 @@ Create the repository, applications, development environment, database foundatio
 - [x] Configure Prettier
 - [x] Add formatting scripts
 - [x] Add lint scripts
-- [ ] Add type-check scripts
+- [x] Add type-check scripts
 
 ## Deliverables
 
