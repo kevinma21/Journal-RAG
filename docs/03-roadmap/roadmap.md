@@ -511,8 +511,8 @@ Create the repository, applications, development environment, database foundatio
 
 - [x] Configure ESLint
 - [x] Configure Prettier
-- [ ] Add formatting scripts
-- [ ] Add lint scripts
+- [x] Add formatting scripts
+- [x] Add lint scripts
 - [ ] Add type-check scripts
 
 ## Deliverables
