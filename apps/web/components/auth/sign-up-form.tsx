@@ -64,7 +64,7 @@ export function SignUpForm() {
       <button
         type="submit"
         disabled={pending}
-        className="group relative flex h-11 w-full items-center justify-center rounded-lg bg-[#4F46E5] px-4 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#6366F1] focus:outline-none focus:ring-2 focus:ring-[#4F46E5]/40 disabled:cursor-not-allowed disabled:opacity-50"
+        className="group relative flex h-11 w-full items-center justify-center rounded-lg bg-brand-500 px-4 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#6366F1] focus:outline-none focus:ring-2 focus:ring-[#4F46E5]/40 disabled:cursor-not-allowed disabled:opacity-50"
       >
         <span>
           {pending ? 'Creating account...' : 'Create account'}
@@ -103,7 +103,7 @@ function Field({
     <div>
       <label
         htmlFor={id}
-        className="mb-1.5 block text-xs font-medium text-[#FDFDFD]"
+        className="mb-1.5 block text-xs font-medium text-text-primary"
       >
         {label}
       </label>
@@ -117,7 +117,7 @@ function Field({
         placeholder={placeholder}
         aria-invalid={Boolean(error)}
         aria-describedby={error ? `${id}-error` : undefined}
-        className="h-11 w-full rounded-lg border border-white/[0.08] bg-[#1D1821] px-3.5 text-sm text-[#FDFDFD] outline-none transition duration-150 placeholder:text-[#737378] hover:border-white/[0.12] focus:border-[#4F46E5] focus:ring-2 focus:ring-[#4F46E5]/20"
+        className="h-11 w-full rounded-lg border border-white/8 bg-[#1D1821] px-3.5 text-sm text-text-primary outline-none transition duration-150 placeholder:text-[#737378] hover:border-white/12 focus:border-brand-500 focus:ring-2 focus:ring-[#4F46E5]/20"
       />
 
       {error && (
