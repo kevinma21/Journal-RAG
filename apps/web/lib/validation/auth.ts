@@ -11,4 +11,10 @@ export const signUpSchema = z
     message: 'Password do not match.',
   });
 
-export type SignUpInput = z.infer<typeof signUpSchema>;
+  export const loginSchema = z.object({
+    email: z.string().trim().pipe(z.email('Please enter a valid email address.')),
+    password: z.string().min(8, 'Please enter your password.'),
+  });
+
+  export type logininput = z.infer<typeof loginSchema>;
+  export type SignUpInput = z.infer<typeof signUpSchema>;
