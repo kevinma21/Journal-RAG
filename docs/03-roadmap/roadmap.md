@@ -562,7 +562,7 @@ Create secure user authentication and the foundation for tenant isolation.
 ## Features
 
 - [x] Sign up
-- [ ] Login
+- [x] Login
 - [ ] Logout
 - [ ] Password reset
 - [ ] Google authentication
