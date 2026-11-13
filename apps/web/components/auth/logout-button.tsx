@@ -23,11 +23,7 @@ export function LogoutButton() {
     >
       {/* Icon */}
       <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-bg-secondary text-text-tertiary transition-colors duration-200 group-hover:bg-error-500/10 group-hover:text-error-500">
-        {pending ? (
-          <Loader2 size={16} className="animate-spin" />
-        ) : (
-          <LogOut size={16} />
-        )}
+        {pending ? <Loader2 size={16} className="animate-spin" /> : <LogOut size={16} />}
       </span>
 
       {/* Text */}
@@ -36,9 +32,7 @@ export function LogoutButton() {
           {pending ? 'Signing out...' : 'Log out'}
         </span>
 
-        <span className="block text-[11px] text-text-tertiary">
-          End your current session
-        </span>
+        <span className="block text-[11px] text-text-tertiary">End your current session</span>
       </span>
     </button>
   );

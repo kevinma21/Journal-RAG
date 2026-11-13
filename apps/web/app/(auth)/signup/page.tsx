@@ -15,13 +15,10 @@ export default function SignupPage() {
           </span>
         </div>
 
-        <h1 className="text-3xl font-bold tracking-[-0.03em] sm:text-4xl">
-          Start remembering.
-        </h1>
+        <h1 className="text-3xl font-bold tracking-[-0.03em] sm:text-4xl">Start remembering.</h1>
 
         <p className="mt-3 max-w-md text-sm leading-6 text-auth-text-secondary">
-          Create your personal space for the moments, ideas, and experiences
-          you want to remember.
+          Create your personal space for the moments, ideas, and experiences you want to remember.
         </p>
       </div>
 

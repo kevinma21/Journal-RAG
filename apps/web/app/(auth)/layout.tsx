@@ -25,9 +25,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
 
         {/* Left — authentication */}
         <section className="flex min-h-0 items-center bg-black px-6 py-6 sm:px-10 lg:px-14 xl:px-16">
-          <div className="mx-auto w-full max-w-117.5">
-            {children}
-          </div>
+          <div className="mx-auto w-full max-w-117.5">{children}</div>
         </section>
 
         {/* Right — JournalPilot brand / hero */}

@@ -75,9 +75,7 @@ export function AuthHero() {
         return;
       }
 
-      setDisplayedText((current) =>
-        phrase.slice(0, current.length + 1),
-      );
+      setDisplayedText((current) => phrase.slice(0, current.length + 1));
     }, delay);
 
     return () => {
@@ -96,8 +94,7 @@ export function AuthHero() {
         <div
           className="absolute inset-0 opacity-[0.04]"
           style={{
-            backgroundImage:
-              'radial-gradient(circle, #ffffff 1px, transparent 1px)',
+            backgroundImage: 'radial-gradient(circle, #ffffff 1px, transparent 1px)',
             backgroundSize: '28px 28px',
           }}
         />
@@ -143,8 +140,7 @@ export function AuthHero() {
 
           {/* Description */}
           <p className="mt-7 max-w-125 text-base leading-7 text-text-secondary">
-            A calm, intelligent space to write, search, and rediscover your
-            memories.
+            A calm, intelligent space to write, search, and rediscover your memories.
           </p>
 
           {/* Animated journey */}
@@ -156,18 +152,13 @@ export function AuthHero() {
                 const isCompleted = index < activeStep;
 
                 return (
-                  <div
-                    key={step.label}
-                    className="flex flex-1 items-center"
-                  >
+                  <div key={step.label} className="flex flex-1 items-center">
                     {/* Step */}
                     <div
                       className={[
                         'relative z-10 flex items-center gap-2 rounded-full px-3 py-2',
                         'transition-all duration-500 ease-out',
-                        isActive
-                          ? 'bg-brand-500/10'
-                          : 'bg-transparent',
+                        isActive ? 'bg-brand-500/10' : 'bg-transparent',
                       ].join(' ')}
                     >
                       {/* Indicator */}
@@ -186,9 +177,7 @@ export function AuthHero() {
                       <span
                         className={[
                           'text-sm font-medium transition-colors duration-300',
-                          isActive
-                            ? 'text-text-primary'
-                            : 'text-text-tertiary',
+                          isActive ? 'text-text-primary' : 'text-text-tertiary',
                         ].join(' ')}
                       >
                         {step.label}
@@ -202,9 +191,7 @@ export function AuthHero() {
                           className={[
                             'h-full origin-left bg-brand-500',
                             'transition-transform duration-700 ease-out',
-                            index < activeStep
-                              ? 'scale-x-100'
-                              : 'scale-x-0',
+                            index < activeStep ? 'scale-x-100' : 'scale-x-0',
                           ].join(' ')}
                         />
                       </div>

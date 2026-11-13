@@ -2,24 +2,15 @@
 
 import { useActionState } from 'react';
 
-import {
-  initialLoginState,
-  login,
-} from '@/app/(auth)/login/actions';
+import { initialLoginState, login } from '@/app/(auth)/login/actions';
 
 export function LoginForm() {
-  const [state, formAction, pending] = useActionState(
-    login,
-    initialLoginState,
-  );
+  const [state, formAction, pending] = useActionState(login, initialLoginState);
 
   return (
     <form action={formAction} className="space-y-4">
       <div>
-        <label
-          htmlFor="email"
-          className="mb-1.5 block text-xs font-medium text-text-primary"
-        >
+        <label htmlFor="email" className="mb-1.5 block text-xs font-medium text-text-primary">
           Email
         </label>
 
@@ -35,17 +26,12 @@ export function LoginForm() {
         />
 
         {state.errors?.email && (
-          <p className="mt-1.5 text-xs text-error-500">
-            {state.errors.email}
-          </p>
+          <p className="mt-1.5 text-xs text-error-500">{state.errors.email}</p>
         )}
       </div>
 
       <div>
-        <label
-          htmlFor="password"
-          className="mb-1.5 block text-xs font-medium text-text-primary"
-        >
+        <label htmlFor="password" className="mb-1.5 block text-xs font-medium text-text-primary">
           Password
         </label>
 
@@ -61,9 +47,7 @@ export function LoginForm() {
         />
 
         {state.errors?.password && (
-          <p className="mt-1.5 text-xs text-error-500">
-            {state.errors.password}
-          </p>
+          <p className="mt-1.5 text-xs text-error-500">{state.errors.password}</p>
         )}
       </div>
 

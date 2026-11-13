@@ -2,16 +2,10 @@
 
 import { useActionState } from 'react';
 
-import {
-  initialSignUpState,
-  signUp,
-} from '@/app/(auth)/signup/actions';
+import { initialSignUpState, signUp } from '@/app/(auth)/signup/actions';
 
 export function SignUpForm() {
-  const [state, formAction, pending] = useActionState(
-    signUp,
-    initialSignUpState,
-  );
+  const [state, formAction, pending] = useActionState(signUp, initialSignUpState);
 
   return (
     <form action={formAction} className="space-y-4">
@@ -66,9 +60,7 @@ export function SignUpForm() {
         disabled={pending}
         className="group relative flex h-11 w-full items-center justify-center rounded-lg bg-brand-500 px-4 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#6366F1] focus:outline-none focus:ring-2 focus:ring-[#4F46E5]/40 disabled:cursor-not-allowed disabled:opacity-50"
       >
-        <span>
-          {pending ? 'Creating account...' : 'Create account'}
-        </span>
+        <span>{pending ? 'Creating account...' : 'Create account'}</span>
 
         {!pending && (
           <span className="absolute right-4 transition-transform duration-200 group-hover:translate-x-0.5">
@@ -90,21 +82,10 @@ type FieldProps = {
   error?: string;
 };
 
-function Field({
-  id,
-  name,
-  label,
-  type,
-  autoComplete,
-  placeholder,
-  error,
-}: FieldProps) {
+function Field({ id, name, label, type, autoComplete, placeholder, error }: FieldProps) {
   return (
     <div>
-      <label
-        htmlFor={id}
-        className="mb-1.5 block text-xs font-medium text-text-primary"
-      >
+      <label htmlFor={id} className="mb-1.5 block text-xs font-medium text-text-primary">
         {label}
       </label>
 

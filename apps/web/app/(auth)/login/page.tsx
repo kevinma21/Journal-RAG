@@ -2,7 +2,15 @@ import Link from 'next/link';
 
 import { LoginForm } from '@/components/auth/login-form';
 
-export default function LoginPage() {
+type LoginPageProps = {
+  searchParams: Promise<{
+    reset?: string;
+  }>;
+};
+
+export default async function LoginPage({ searchParams }: LoginPageProps) {
+  const params = await searchParams;
+
   return (
     <div className="w-full">
       <div className="mb-8">
@@ -23,7 +31,25 @@ export default function LoginPage() {
         </p>
       </div>
 
+      {params.reset === 'success' && (
+        <div
+          role="status"
+          className="mb-5 rounded-md border border-success-500/20 bg-success-500/5 px-3 py-2.5 text-xs text-success-500"
+        >
+          Your password has been updated. You can now sign in.
+        </div>
+      )}
+
       <LoginForm />
+
+      <div className="mt-4 text-right">
+        <Link
+          href="/forgot-password"
+          className="text-xs font-medium text-text-secondary transition-colors hover:text-brand-400"
+        >
+          Forgot password?
+        </Link>
+      </div>
 
       <p className="mt-6 text-center text-sm text-text-secondary">
         Don&apos;t have an account?{' '}

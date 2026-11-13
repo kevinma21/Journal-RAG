@@ -27,10 +27,7 @@ export function Sidebar() {
       </div>
 
       {/* Navigation */}
-      <nav
-        aria-label="Primary navigation"
-        className="flex-1 px-3 py-4"
-      >
+      <nav aria-label="Primary navigation" className="flex-1 px-3 py-4">
         {/* Navigation items will go here */}
       </nav>
 

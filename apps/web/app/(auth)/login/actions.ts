@@ -18,10 +18,7 @@ export const initialLoginState: LoginState = {
   status: 'idle',
 };
 
-export async function login(
-  _previousState: LoginState,
-  formData: FormData,
-): Promise<LoginState> {
+export async function login(_previousState: LoginState, formData: FormData): Promise<LoginState> {
   const result = loginSchema.safeParse({
     email: formData.get('email'),
     password: formData.get('password'),
@@ -55,8 +52,7 @@ export async function login(
   if (error) {
     return {
       status: 'error',
-      message:
-        'Unable to sign in. Check your email and password.',
+      message: 'Unable to sign in. Check your email and password.',
     };
   }
 
