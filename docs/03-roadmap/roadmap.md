@@ -561,7 +561,7 @@ Create secure user authentication and the foundation for tenant isolation.
 
 ## Features
 
-- [ ] Sign up
+- [x] Sign up
 - [ ] Login
 - [ ] Logout
 - [ ] Password reset
