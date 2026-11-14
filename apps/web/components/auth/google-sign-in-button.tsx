@@ -24,11 +24,7 @@ export function GoogleSignInButton() {
       onClick={handleGoogleSignIn}
       className="flex w-full items-center justify-center gap-3 rounded-md border border-border-subtle bg-bg-primary px-4 py-3 text-sm font-medium text-text-primary transition-colors hover:bg-bg-secondary"
     >
-      <svg
-        viewBox="0 0 24 24"
-        aria-hidden="true"
-        className="h-4 w-4"
-      >
+      <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4">
         <path
           fill="#4285F4"
           d="M21.35 12.23c0-.79-.07-1.55-.2-2.28H12v4.31h5.24a4.48 4.48 0 0 1-1.94 2.94v2.45h3.14c1.84-1.7 2.91-4.2 2.91-7.42Z"
@@ -46,7 +42,6 @@ export function GoogleSignInButton() {
           d="M12 6.38c1.43 0 2.7.49 3.71 1.45l2.78-2.78C16.86 3.49 14.64 2.5 12 2.5a9.79 9.79 0 0 0-8.74 5.4L6.5 10.43c.78-2.32 2.94-4.05 5.5-4.05Z"
         />
       </svg>
-
       Continue with Google
     </button>
   );
