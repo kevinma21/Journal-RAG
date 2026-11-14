@@ -568,7 +568,7 @@ Create secure user authentication and the foundation for tenant isolation.
 - [x] Google authentication
 - [x] Session handling
 - [x] Authenticated API requests
-- [ ] User identity extraction
+- [x] User identity extraction
 - [ ] Authorization guards
 - [ ] User ownership checks
 

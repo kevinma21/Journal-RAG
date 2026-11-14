@@ -14,6 +14,7 @@ async function bootstrap() {
     .setTitle('JournalPilot API')
     .setDescription('JournalPilot REST API')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
 
   const swaggerDocument = () =>
