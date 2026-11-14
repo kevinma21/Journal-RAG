@@ -566,7 +566,7 @@ Create secure user authentication and the foundation for tenant isolation.
 - [x] Logout
 - [x] Password reset
 - [x] Google authentication
-- [ ] Session handling
+- [x] Session handling
 - [ ] Authenticated API requests
 - [ ] User identity extraction
 - [ ] Authorization guards
