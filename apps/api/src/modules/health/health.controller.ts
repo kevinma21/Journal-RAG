@@ -1,6 +1,18 @@
-import { Controller, Get, Post } from '@nestjs/common';
-import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  Controller,
+  Get,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
+import {
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 
+import { SupabaseAuthGuard } from '../../common/auth/supabase-auth.guard.js';
 import { HealthService } from './health.service.js';
 
 @ApiTags('Health')
@@ -39,5 +51,39 @@ export class HealthController {
   @Post('queue')
   async enqueueHealthCheck() {
     return this.healthService.enqueueHealthCheck();
+  }
+
+  @Get('authenticated')
+  @UseGuards(SupabaseAuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Check authenticated API access',
+    description:
+      'Verifies that the request contains a valid Supabase access token.',
+  })
+  @ApiOkResponse({
+    description: 'Authenticated request accepted.',
+    schema: {
+      type: 'object',
+      properties: {
+        status: {
+          type: 'string',
+          example: 'ok',
+        },
+        authenticated: {
+          type: 'boolean',
+          example: true,
+        },
+      },
+    },
+  })
+  @ApiUnauthorizedResponse({
+    description: 'Missing, invalid, or expired access token.',
+  })
+  getAuthenticated() {
+    return {
+      status: 'ok',
+      authenticated: true,
+    };
   }
 }

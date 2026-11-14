@@ -3,6 +3,7 @@ import { AppModule } from './app.module.js';
 import { VersioningType, StandardSchemaValidationPipe } from '@nestjs/common';
 import { HttpExceptionFilter } from './common/filters/http-exeception.filter.js';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import './config/env.js';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -22,6 +23,10 @@ async function bootstrap() {
     useGlobalPrefix: true,
   });
 
+  app.enableCors({
+    origin: process.env.WEB_ORIGIN ?? 'http://localhost:3000',
+  });
+
   app.enableVersioning({
     type: VersioningType.URI,
   });
@@ -30,6 +35,6 @@ async function bootstrap() {
 
   app.useGlobalPipes(new StandardSchemaValidationPipe());
 
-  await app.listen(process.env.PORT ?? 3000);
+  await app.listen(process.env.PORT ?? 3001);
 }
 await bootstrap();
