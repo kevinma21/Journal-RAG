@@ -1,5 +1,5 @@
 import Link from 'next/link';
-
+import { GoogleSignInButton } from '@/components/auth/google-sign-in-button';
 import { LoginForm } from '@/components/auth/login-form';
 
 type LoginPageProps = {
@@ -41,6 +41,16 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
       )}
 
       <LoginForm />
+
+      <div className="my-6 flex items-center gap-3">
+        <div className="h-px flex-1 bg-border-subtle" />
+        <span className="text-[11px] uppercase tracking-[0.12em] text-text-tertiary">
+          Or
+        </span>
+        <div className="h-px flex-1 bg-border-subtle" />
+      </div>
+
+      <GoogleSignInButton />
 
       <div className="mt-4 text-right">
         <Link
