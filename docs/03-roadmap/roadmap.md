@@ -569,7 +569,7 @@ Create secure user authentication and the foundation for tenant isolation.
 - [x] Session handling
 - [x] Authenticated API requests
 - [x] User identity extraction
-- [ ] Authorization guards
+- [x] Authorization guards
 - [ ] User ownership checks
 
 ## Technologies
