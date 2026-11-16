@@ -570,7 +570,7 @@ Create secure user authentication and the foundation for tenant isolation.
 - [x] Authenticated API requests
 - [x] User identity extraction
 - [x] Authorization guards
-- [ ] User ownership checks
+- [x] User ownership checks
 
 ## Technologies
 
