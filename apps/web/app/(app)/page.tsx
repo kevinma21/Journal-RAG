@@ -1,8 +1,7 @@
-export default function DashboardPage() {
-  return (
-    <section
-      aria-label="Dashboard preview"
-      className="grid md:grid-cols-2 xl:grid-cols-3"
-    ></section>
-  );
+import { JournalManagement } from '@/components/journals/journal-management';
+import { getInitialJournals } from '@/lib/journals/server';
+
+export default async function DashboardPage() {
+  const initial = await getInitialJournals();
+  return <JournalManagement initialJournals={initial.journals} initialError={initial.error} />;
 }

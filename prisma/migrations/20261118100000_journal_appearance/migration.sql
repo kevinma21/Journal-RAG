@@ -1,0 +1,3 @@
+ALTER TABLE "journals"
+  ADD COLUMN "icon" VARCHAR(64) NOT NULL DEFAULT 'book',
+  ADD COLUMN "color" VARCHAR(32) NOT NULL DEFAULT 'indigo';

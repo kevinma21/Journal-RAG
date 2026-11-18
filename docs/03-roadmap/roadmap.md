@@ -611,11 +611,12 @@ Implement the core journaling product before introducing AI.
 
 ## Journal Management
 
-- [ ] Create journal
-- [ ] Rename journal
-- [ ] Delete journal
-- [ ] List journals
-- [ ] Select active journal
+- [x] Create journal
+- [x] Rename journal
+- [x] Set journal color and icon
+- [x] Delete journal
+- [x] List journals
+- [x] Select active journal
 
 ## Entry Management
 

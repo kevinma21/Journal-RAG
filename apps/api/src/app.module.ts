@@ -4,6 +4,8 @@ import { BullModule } from '@nestjs/bullmq';
 import { AuthModule } from './common/auth/auth.module.js';
 import { HealthModule } from './modules/health/health.module.js';
 import { UsersModule } from './modules/users/users.module.js';
+import { DatabaseModule } from './database/database.module.js';
+import { JournalsModule } from './modules/journals/journals.module.js';
 
 @Module({
   imports: [
@@ -16,7 +18,9 @@ import { UsersModule } from './modules/users/users.module.js';
         return {
           connection: {
             host: url.hostname,
-            port: Number(url.port || (url.protocol === 'rediss:' ? 6380 : 6379)),
+            port: Number(
+              url.port || (url.protocol === 'rediss:' ? 6380 : 6379),
+            ),
             username: url.username || undefined,
             password: url.password || undefined,
             db: database ? Number(database) : undefined,
@@ -27,7 +31,9 @@ import { UsersModule } from './modules/users/users.module.js';
       },
     }),
     AuthModule,
+    DatabaseModule,
     HealthModule,
+    JournalsModule,
     UsersModule,
   ],
 })

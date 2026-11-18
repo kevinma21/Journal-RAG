@@ -4,12 +4,9 @@ import { Header } from './header';
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   return (
-    <div className="relative flex h-screen w-full bg-bg-base text-text-primary overflow-hidden">
-      <div className="absolute top-0 left-0 z-20">
-        <Sidebar />
-      </div>
-
-      <div className="flex flex-1 flex-col min-w-0 w-full">
+    <div className="flex h-dvh w-full overflow-hidden bg-bg-base text-text-primary">
+      <Sidebar />
+      <div className="flex min-w-0 flex-1 flex-col">
         <Header />
         <MainContent>{children}</MainContent>
       </div>

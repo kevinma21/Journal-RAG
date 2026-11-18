@@ -1,31 +1,43 @@
 'use client';
 
-import { useActionState } from 'react';
-import { useEffect, useState } from 'react';
+import { useActionState, useEffect, useSyncExternalStore } from 'react';
 
 import { login } from '@/app/(auth)/login/actions';
 import { initialLoginState } from '@/app/(auth)/login/state';
 import { PasswordInput } from './password-input';
 
+const EXPIRED_LINK_MESSAGE =
+  'This email link has expired or was already used. Request a new link and open the latest email.';
+
+function subscribeToAuthLink(callback: () => void) {
+  window.addEventListener('hashchange', callback);
+  return () => window.removeEventListener('hashchange', callback);
+}
+
+function getAuthLinkMessage() {
+  const params = new URLSearchParams(window.location.hash.slice(1));
+  const errorCode = params.get('error_code');
+
+  return errorCode === 'otp_expired' || errorCode === 'access_denied' ? EXPIRED_LINK_MESSAGE : null;
+}
+
+function getServerAuthLinkMessage() {
+  return null;
+}
+
 export function LoginForm() {
   const [state, formAction, pending] = useActionState(login, initialLoginState);
-  const [authLinkMessage, setAuthLinkMessage] = useState<string>();
+  const authLinkMessage = useSyncExternalStore(
+    subscribeToAuthLink,
+    getAuthLinkMessage,
+    getServerAuthLinkMessage,
+  );
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.hash.slice(1));
-    const errorCode = params.get('error_code');
-
-    if (errorCode === 'otp_expired' || errorCode === 'access_denied') {
-      setAuthLinkMessage(
-        'This email link has expired or was already used. Request a new link and open the latest email.',
-      );
-      window.history.replaceState(
-        null,
-        '',
-        `${window.location.pathname}${window.location.search}`,
-      );
+    if (authLinkMessage) {
+      window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}`);
     }
-  }, []);
+  }, [authLinkMessage]);
 
   const message = state.message ?? authLinkMessage;
 

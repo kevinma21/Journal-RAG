@@ -179,6 +179,8 @@ Represents a logical collection of journal entries.
 | user_id     | UUID      | Yes      | Owner of the journal      |
 | name        | String    | Yes      | Journal name              |
 | description | Text      | Optional | Journal description       |
+| icon        | String    | Yes      | Journal icon preset       |
+| color       | String    | Yes      | Journal color preset      |
 | created_at  | Timestamp | Yes      | Creation timestamp        |
 | updated_at  | Timestamp | Yes      | Last update timestamp     |
 | deleted_at  | Timestamp | Optional | Soft-delete timestamp     |

@@ -7,6 +7,9 @@
   "license": "UNLICENSED",
   "type": "module",
   "scripts": {
+    "prebuild": "pnpm --dir ../.. build:validation && pnpm --dir ../.. db:generate",
+    "prestart:dev": "pnpm --dir ../.. build:validation && pnpm --dir ../.. db:generate",
+    "pretypecheck": "pnpm --dir ../.. build:validation && pnpm --dir ../.. db:generate",
     "build": "nest build",
     "deploy": "nest deploy",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",

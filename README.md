@@ -40,7 +40,9 @@ apps/api/.env
 apps/web/.env.local
 ```
 
-Database configuration is used by the root Prisma tooling.
+The root `.env` is the shared source for `DATABASE_URL` (API runtime) and the
+Prisma migration URLs (`MIGRATION_DATABASE_URL` and `SHADOW_DATABASE_URL`). The
+API loads those values as well as API-specific settings from `apps/api/.env`.
 
 API runtime configuration includes Redis and server-side services.
 
