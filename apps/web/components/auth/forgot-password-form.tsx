@@ -2,10 +2,8 @@
 
 import { useActionState } from 'react';
 
-import {
-  initialForgotPasswordState,
-  requestPasswordReset,
-} from '@/app/(auth)/forgot-password/actions';
+import { requestPasswordReset } from '@/app/(auth)/forgot-password/actions';
+import { initialForgotPasswordState } from '@/app/(auth)/forgot-password/state';
 
 export function ForgotPasswordForm() {
   const [state, formAction, pending] = useActionState(

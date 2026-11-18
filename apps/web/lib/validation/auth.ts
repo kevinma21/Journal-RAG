@@ -1,10 +1,23 @@
 import { z } from 'zod';
 
+const emailSchema = z
+  .string()
+  .trim()
+  .max(254, 'Email address must be 254 characters or fewer.')
+  .pipe(z.email('Please enter a valid email address.'));
+
+const passwordSchema = z
+  .string()
+  .min(8, 'Password must be at least 8 characters.')
+  .max(256, 'Password must be 256 characters or fewer.');
+
 export const signUpSchema = z
   .object({
-    email: z.string().trim().pipe(z.email('Please enter a valid email address.')),
-    password: z.string().min(8, 'Password must be at least 8 chracters.'),
-    confirmPassword: z.string(),
+    email: emailSchema,
+    password: passwordSchema,
+    confirmPassword: z
+      .string()
+      .max(256, 'Password must be 256 characters or fewer.'),
   })
   .refine((data) => data.password === data.confirmPassword, {
     path: ['confirmPassword'],
@@ -12,18 +25,20 @@ export const signUpSchema = z
   });
 
 export const loginSchema = z.object({
-  email: z.string().trim().pipe(z.email('Please enter a valid email address.')),
-  password: z.string().min(8, 'Please enter your password.'),
+  email: emailSchema,
+  password: passwordSchema,
 });
 
 export const forgotPasswordSchema = z.object({
-  email: z.string().trim().pipe(z.email('Please enter a valid email address.')),
+  email: emailSchema,
 });
 
 export const resetPasswordSchema = z
   .object({
-    password: z.string().min(8, 'Password must be at least 8 characters.'),
-    confirmPassword: z.string(),
+    password: passwordSchema,
+    confirmPassword: z
+      .string()
+      .max(256, 'Password must be 256 characters or fewer.'),
   })
   .refine((data) => data.password === data.confirmPassword, {
     path: ['confirmPassword'],

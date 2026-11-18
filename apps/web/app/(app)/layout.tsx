@@ -1,5 +1,15 @@
-import { AppShell } from '@/components/layout/app-shell';
+import { redirect } from 'next/navigation';
 
-export default function AppLayout({ children }: { children: React.ReactNode }) {
+import { AppShell } from '@/components/layout/app-shell';
+import { createClient } from '@/lib/supabase/server';
+
+export default async function AppLayout({ children }: { children: React.ReactNode }) {
+  const supabase = await createClient();
+  const { data, error } = await supabase.auth.getClaims();
+
+  if (error || !data?.claims?.sub) {
+    redirect('/login');
+  }
+
   return <AppShell>{children}</AppShell>;
 }

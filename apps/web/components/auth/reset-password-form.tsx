@@ -2,7 +2,9 @@
 
 import { useActionState } from 'react';
 
-import { initialResetPasswordState, resetPassword } from '@/app/(auth)/reset-password/actions';
+import { resetPassword } from '@/app/(auth)/reset-password/actions';
+import { initialResetPasswordState } from '@/app/(auth)/reset-password/state';
+import { PasswordInput } from './password-input';
 
 export function ResetPasswordForm() {
   const [state, formAction, pending] = useActionState(resetPassword, initialResetPasswordState);
@@ -15,16 +17,15 @@ export function ResetPasswordForm() {
           New password
         </label>
 
-        <input
+        <PasswordInput
           id="password"
           name="password"
-          type="password"
           autoComplete="new-password"
           required
           placeholder="••••••••"
           aria-invalid={Boolean(state.errors?.password)}
           aria-describedby={state.errors?.password ? 'reset-password-error' : undefined}
-          className="h-11 w-full rounded-md border border-border-subtle bg-bg-primary px-3.5 text-sm text-text-primary outline-none transition-colors placeholder:text-text-tertiary hover:border-border-focus/50 focus:border-border-focus focus:ring-2 focus:ring-brand-500/15"
+          className="h-11 w-full rounded-md border border-border-subtle bg-bg-primary px-3.5 pr-11 text-sm text-text-primary outline-none transition-colors placeholder:text-text-tertiary hover:border-border-focus/50 focus:border-border-focus focus:ring-2 focus:ring-brand-500/15"
         />
 
         {state.errors?.password && (
@@ -43,16 +44,15 @@ export function ResetPasswordForm() {
           Confirm new password
         </label>
 
-        <input
+        <PasswordInput
           id="confirmPassword"
           name="confirmPassword"
-          type="password"
           autoComplete="new-password"
           required
           placeholder="••••••••"
           aria-invalid={Boolean(state.errors?.confirmPassword)}
           aria-describedby={state.errors?.confirmPassword ? 'confirm-password-error' : undefined}
-          className="h-11 w-full rounded-md border border-border-subtle bg-bg-primary px-3.5 text-sm text-text-primary outline-none transition-colors placeholder:text-text-tertiary hover:border-border-focus/50 focus:border-border-focus focus:ring-2 focus:ring-brand-500/15"
+          className="h-11 w-full rounded-md border border-border-subtle bg-bg-primary px-3.5 pr-11 text-sm text-text-primary outline-none transition-colors placeholder:text-text-tertiary hover:border-border-focus/50 focus:border-border-focus focus:ring-2 focus:ring-brand-500/15"
         />
 
         {state.errors?.confirmPassword && (

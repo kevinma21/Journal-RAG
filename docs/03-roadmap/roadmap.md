@@ -570,7 +570,7 @@ Create secure user authentication and the foundation for tenant isolation.
 - [x] Authenticated API requests
 - [x] User identity extraction
 - [x] Authorization guards
-- [x] User ownership checks
+- [x] User ownership policies defined for application data
 
 ## Technologies
 
@@ -587,17 +587,19 @@ Swagger
 
 ## Security Requirements
 
-- [ ] Never trust client-provided `user_id`
-- [ ] Derive identity from authenticated context
-- [ ] Protect authenticated routes
-- [ ] Protect database access by ownership
-- [ ] Protect storage access
-- [ ] Validate all input
-- [ ] Handle expired/invalid sessions
+- [x] Never trust client-provided `user_id`
+- [x] Derive identity from authenticated context
+- [x] Protect authenticated routes
+- [x] Protect database access by ownership
+- [x] Protect storage access
+- [x] Validate all input
+- [x] Handle expired/invalid sessions
+
+Authentication, session handling, the authenticated API guard, and input validation were verified with focused API and web tests. The Supabase migrations define owner-scoped RLS policies for application tables and a private `journal-media` bucket with per-user object paths; these database and storage requirements are approved at the repository/migration level. The migrations have not been confirmed as applied to the connected Supabase project, and cross-user database/storage access has not been tested against that live project. The API does not yet expose journal or media resources, so application-level ownership enforcement must be exercised when those endpoints are implemented in Phase 2.
 
 ## Exit Criteria
 
-A user can securely authenticate and access only their own application resources.
+A user can securely authenticate, and the application has owner-scoped database/storage policies ready for user-owned resources. Verify cross-user access against the deployed Supabase project as part of Phase 2, when journal and media endpoints exist.
 
 ---
 

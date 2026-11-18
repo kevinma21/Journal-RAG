@@ -2,7 +2,9 @@
 
 import { useActionState } from 'react';
 
-import { initialSignUpState, signUp } from '@/app/(auth)/signup/actions';
+import { signUp } from '@/app/(auth)/signup/actions';
+import { initialSignUpState } from '@/app/(auth)/signup/state';
+import { PasswordInput } from './password-input';
 
 export function SignUpForm() {
   const [state, formAction, pending] = useActionState(signUp, initialSignUpState);
@@ -89,17 +91,30 @@ function Field({ id, name, label, type, autoComplete, placeholder, error }: Fiel
         {label}
       </label>
 
-      <input
-        id={id}
-        name={name}
-        type={type}
-        autoComplete={autoComplete}
-        required
-        placeholder={placeholder}
-        aria-invalid={Boolean(error)}
-        aria-describedby={error ? `${id}-error` : undefined}
-        className="h-11 w-full rounded-lg border border-white/8 bg-[#1D1821] px-3.5 text-sm text-text-primary outline-none transition duration-150 placeholder:text-[#737378] hover:border-white/12 focus:border-brand-500 focus:ring-2 focus:ring-[#4F46E5]/20"
-      />
+      {type === 'password' ? (
+        <PasswordInput
+          id={id}
+          name={name}
+          autoComplete={autoComplete}
+          required
+          placeholder={placeholder}
+          aria-invalid={Boolean(error)}
+          aria-describedby={error ? `${id}-error` : undefined}
+          className="h-11 w-full rounded-lg border border-white/8 bg-[#1D1821] px-3.5 pr-11 text-sm text-text-primary outline-none transition duration-150 placeholder:text-[#737378] hover:border-white/12 focus:border-brand-500 focus:ring-2 focus:ring-[#4F46E5]/20"
+        />
+      ) : (
+        <input
+          id={id}
+          name={name}
+          type={type}
+          autoComplete={autoComplete}
+          required
+          placeholder={placeholder}
+          aria-invalid={Boolean(error)}
+          aria-describedby={error ? `${id}-error` : undefined}
+          className="h-11 w-full rounded-lg border border-white/8 bg-[#1D1821] px-3.5 text-sm text-text-primary outline-none transition duration-150 placeholder:text-[#737378] hover:border-white/12 focus:border-brand-500 focus:ring-2 focus:ring-[#4F46E5]/20"
+        />
+      )}
 
       {error && (
         <p id={`${id}-error`} className="mt-1.5 text-xs text-[#FF4444]">

@@ -1,38 +1,22 @@
-import type { EmailOtpType } from '@supabase/supabase-js';
 import { NextResponse, type NextRequest } from 'next/server';
 
+import { getSupportedEmailOtpType } from '@/lib/supabase/auth-otp';
 import { createClient } from '@/lib/supabase/server';
-
-const DEFAULT_NEXT = '/reset-password';
-
-function getSafeNext(value: string | null) {
-  if (!value) {
-    return DEFAULT_NEXT;
-  }
-
-  /*
-   * Only allow internal paths.
-   *
-   * This prevents the `next` parameter from becoming
-   * an open redirect.
-   */
-  if (!value.startsWith('/') || value.startsWith('//')) {
-    return DEFAULT_NEXT;
-  }
-
-  return value;
-}
+import { getSafeInternalRedirect } from '@/lib/supabase/redirect';
 
 export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.url);
 
   const tokenHash = requestUrl.searchParams.get('token_hash');
-  const type = requestUrl.searchParams.get('type') as EmailOtpType | null;
+  const type = getSupportedEmailOtpType(requestUrl.searchParams.get('type'));
 
-  const next = getSafeNext(requestUrl.searchParams.get('next'));
+  const defaultNext = type === 'recovery' ? '/reset-password' : '/';
+  const next = getSafeInternalRedirect(requestUrl.searchParams.get('next'), defaultNext);
 
-  if (!tokenHash || !type) {
-    return NextResponse.redirect(new URL('/forgot-password?error=invalid-link', requestUrl.origin));
+  if (!tokenHash || tokenHash.length > 512 || !type) {
+    return NextResponse.redirect(
+      new URL('/forgot-password?error=invalid-link', requestUrl.origin),
+    );
   }
 
   const supabase = await createClient();
@@ -43,7 +27,9 @@ export async function GET(request: NextRequest) {
   });
 
   if (error) {
-    return NextResponse.redirect(new URL('/forgot-password?error=invalid-link', requestUrl.origin));
+    return NextResponse.redirect(
+      new URL('/forgot-password?error=invalid-link', requestUrl.origin),
+    );
   }
 
   return NextResponse.redirect(new URL(next, requestUrl.origin));

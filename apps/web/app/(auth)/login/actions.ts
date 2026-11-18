@@ -4,19 +4,7 @@ import { redirect } from 'next/navigation';
 
 import { createClient } from '@/lib/supabase/server';
 import { loginSchema } from '@/lib/validation/auth';
-
-export type LoginState = {
-  status: 'idle' | 'error';
-  message?: string;
-  errors?: {
-    email?: string;
-    password?: string;
-  };
-};
-
-export const initialLoginState: LoginState = {
-  status: 'idle',
-};
+import type { LoginState } from './state';
 
 export async function login(_previousState: LoginState, formData: FormData): Promise<LoginState> {
   const result = loginSchema.safeParse({
@@ -50,9 +38,23 @@ export async function login(_previousState: LoginState, formData: FormData): Pro
   });
 
   if (error) {
+    // Keep credentials and email out of logs while retaining a useful reason
+    // for diagnosing Auth configuration and account-state failures.
+    console.warn('Supabase password sign-in failed', {
+      code: error.code ?? 'unknown',
+      status: error.status ?? null,
+    });
+
+    const message =
+      error.status === 429 ||
+      error.code === 'over_request_rate_limit' ||
+      error.code === 'over_email_send_rate_limit'
+        ? 'Too many sign-in requests. Wait a few minutes, then try again.'
+        : 'Unable to sign in. Check your email and password.';
+
     return {
       status: 'error',
-      message: 'Unable to sign in. Check your email and password.',
+      message,
     };
   }
 

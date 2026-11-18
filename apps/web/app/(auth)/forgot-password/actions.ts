@@ -2,18 +2,8 @@
 
 import { forgotPasswordSchema } from '@/lib/validation/auth';
 import { createClient } from '@/lib/supabase/server';
-
-export type ForgotPasswordState = {
-  status: 'idle' | 'error' | 'success';
-  message?: string;
-  errors?: {
-    email?: string;
-  };
-};
-
-export const initialForgotPasswordState: ForgotPasswordState = {
-  status: 'idle',
-};
+import { getAuthCallbackUrl } from '@/lib/supabase/auth-redirect';
+import type { ForgotPasswordState } from './state';
 
 export async function requestPasswordReset(
   _previousState: ForgotPasswordState,
@@ -37,12 +27,28 @@ export async function requestPasswordReset(
 
   const supabase = await createClient();
 
-  const { error } = await supabase.auth.resetPasswordForEmail(result.data.email);
+  const { error } = await supabase.auth.resetPasswordForEmail(result.data.email, {
+    redirectTo: getAuthCallbackUrl('/reset-password'),
+  });
 
   if (error) {
+    console.warn('Supabase password reset request failed', {
+      code: error.code ?? 'unknown',
+      status: error.status ?? null,
+    });
+
+    const message =
+      error.code === 'email_address_not_authorized'
+        ? 'Supabase email is not configured to send to this address. Configure custom SMTP in your Supabase project.'
+        : error.code === 'over_email_send_rate_limit'
+          ? 'Too many reset emails were requested. Wait before trying again.'
+          : error.code === 'redirect_to_not_allowed'
+            ? 'The reset link URL is not allowed by Supabase. Add the local callback URL to Auth URL Configuration.'
+            : 'Unable to process your request. Please try again.';
+
     return {
       status: 'error',
-      message: 'Unable to process your request. Please try again.',
+      message,
     };
   }
 

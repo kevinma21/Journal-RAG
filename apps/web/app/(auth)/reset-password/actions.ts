@@ -4,19 +4,7 @@ import { redirect } from 'next/navigation';
 
 import { createClient } from '@/lib/supabase/server';
 import { resetPasswordSchema } from '@/lib/validation/auth';
-
-export type ResetPasswordState = {
-  status: 'idle' | 'error';
-  message?: string;
-  errors?: {
-    password?: string;
-    confirmPassword?: string;
-  };
-};
-
-export const initialResetPasswordState: ResetPasswordState = {
-  status: 'idle',
-};
+import type { ResetPasswordState } from './state';
 
 export async function resetPassword(
   _previousState: ResetPasswordState,
