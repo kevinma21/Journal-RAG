@@ -537,6 +537,49 @@ The same rule applies to RAG retrieval.
 
 A semantic match from another user's journal must never be returned as context.
 
+## 7.4 PostgreSQL Row-Level Security
+
+NestJS ownership filters remain required. PostgreSQL RLS is an additional
+boundary so an unscoped Prisma query does not automatically expose another
+tenant's rows.
+
+The API verifies the Supabase access token before it obtains the user ID. Each
+user-owned database operation then runs in a Prisma interactive transaction:
+
+```text
+Supabase access token
+  ↓ verify with Supabase Auth
+Verified user ID
+  ↓ Prisma interactive transaction
+SET LOCAL journalpilot.user_id
+  ↓ same transaction
+Prisma query + ownership predicate + PostgreSQL RLS
+```
+
+`PrismaService.withUserContext` sets the transaction-local value with
+parameterized `set_config(..., true)`. The value reverts when the transaction
+ends, including when Prisma returns the connection to its pool. RLS policies
+read it through `journalpilot_private.current_user_id()`. A missing or invalid
+value resolves to `NULL`, so owner comparisons deny rows by default.
+
+The shared `journalpilot` runtime role must not be a superuser, have
+`BYPASSRLS`, or own tenant tables. Tenant tables use both `ENABLE ROW LEVEL
+SECURITY` and `FORCE ROW LEVEL SECURITY`. The migration account is separate
+from the runtime account and is used only for schema changes.
+
+The API role can set its own custom PostgreSQL setting. Therefore this design
+protects against accidentally omitted ownership filters when the API remains
+trusted; it does not protect against arbitrary SQL execution or stolen runtime
+database credentials. Keep user IDs out of client-controlled request fields,
+use Prisma's parameterized APIs, and never expose database credentials to
+clients.
+
+Background workers that access tenant data must establish the same explicit
+tenant context for each job after validating the job's trusted ownership
+source. System jobs that need cross-tenant access require a separate, narrowly
+scoped role and explicit authorization; they must not use `BYPASSRLS` by
+default.
+
 ---
 
 # 8. Journal Ingestion Architecture

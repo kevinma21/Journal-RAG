@@ -7,10 +7,8 @@ import { JournalCard } from './journal-card';
 
 type JournalLibraryProps = {
   journals: Journal[];
-  activeId: string | null;
   query: string;
   onQueryChange: (value: string) => void;
-  onSelect: (id: string) => void;
   onCreate: () => void;
   onEdit: (journal: Journal) => void;
   onDelete: (journal: Journal) => void;
@@ -18,10 +16,8 @@ type JournalLibraryProps = {
 
 export function JournalLibrary({
   journals,
-  activeId,
   query,
   onQueryChange,
-  onSelect,
   onCreate,
   onEdit,
   onDelete,
@@ -80,8 +76,6 @@ export function JournalLibrary({
             <li key={journal.id}>
               <JournalCard
                 journal={journal}
-                selected={journal.id === activeId}
-                onSelect={() => onSelect(journal.id)}
                 onEdit={() => onEdit(journal)}
                 onDelete={() => onDelete(journal)}
               />

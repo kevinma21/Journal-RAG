@@ -5,7 +5,6 @@ import { useState } from 'react';
 
 import { apiFetch } from '@/lib/api/client';
 import { getApiError, getNetworkError } from '@/lib/journals/http-error';
-import { useActiveJournal } from '@/lib/journals/use-active-journal';
 import type { Journal, JournalFormValues } from '@/lib/journals/types';
 import { DeleteJournalDialog } from './delete-journal-dialog';
 import { JournalFormDialog } from './journal-form-dialog';
@@ -20,7 +19,6 @@ type JournalManagementProps = {
 
 export function JournalManagement({ initialJournals, initialError }: JournalManagementProps) {
   const [journals, setJournals] = useState(initialJournals);
-  const { activeId, selectActiveJournal } = useActiveJournal(journals);
   const [query, setQuery] = useState('');
   const [pageError, setPageError] = useState(initialError);
   const [dialog, setDialog] = useState<JournalDialogState>(null);
@@ -39,9 +37,6 @@ export function JournalManagement({ initialJournals, initialError }: JournalMana
 
       const nextJournals = (await response.json()) as Journal[];
       setJournals(nextJournals);
-      if (!nextJournals.some((journal) => journal.id === activeId)) {
-        selectActiveJournal(nextJournals[0]?.id ?? null);
-      }
     } catch (error) {
       setPageError(getNetworkError(error));
     } finally {
@@ -71,7 +66,6 @@ export function JournalManagement({ initialJournals, initialError }: JournalMana
         );
       } else {
         setJournals((current) => [savedJournal, ...current]);
-        selectActiveJournal(savedJournal.id);
       }
       setPageError(null);
       setDialog(null);
@@ -91,9 +85,6 @@ export function JournalManagement({ initialJournals, initialError }: JournalMana
       if (!response.ok) throw new Error(await getApiError(response));
 
       setJournals((current) => current.filter((journal) => journal.id !== deleteTarget.id));
-      if (activeId === deleteTarget.id) {
-        selectActiveJournal(journals.find((journal) => journal.id !== deleteTarget.id)?.id ?? null);
-      }
       setPageError(null);
       setDeleteTarget(null);
     } finally {
@@ -189,10 +180,8 @@ export function JournalManagement({ initialJournals, initialError }: JournalMana
       ) : (
         <JournalLibrary
           journals={journals}
-          activeId={activeId}
           query={query}
           onQueryChange={setQuery}
-          onSelect={selectActiveJournal}
           onCreate={openCreateDialog}
           onEdit={openEditDialog}
           onDelete={openDeleteDialog}

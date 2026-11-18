@@ -1,14 +1,13 @@
 'use client';
 
-import { CalendarDays, Check, Pencil, Trash2 } from 'lucide-react';
+import Link from 'next/link';
+import { CalendarDays, Pencil, Trash2 } from 'lucide-react';
 
 import { JOURNAL_COLORS, JOURNAL_ICONS } from './journal-appearance';
 import type { Journal } from '@/lib/journals/types';
 
 type JournalCardProps = {
   journal: Journal;
-  selected: boolean;
-  onSelect: () => void;
   onEdit: () => void;
   onDelete: () => void;
 };
@@ -22,29 +21,22 @@ function formatDate(value: string) {
   }).format(new Date(value));
 }
 
-export function JournalCard({ journal, selected, onSelect, onEdit, onDelete }: JournalCardProps) {
+export function JournalCard({ journal, onEdit, onDelete }: JournalCardProps) {
   const Icon = JOURNAL_ICONS[journal.icon] ?? JOURNAL_ICONS.book;
   const color = JOURNAL_COLORS[journal.color] ?? JOURNAL_COLORS.indigo;
 
   return (
-    <article
-      className={`group flex min-h-56 flex-col rounded-xl border bg-bg-primary p-5 transition-colors ${
-        selected
-          ? 'border-brand-400/70 shadow-[0_0_0_1px_rgb(99_102_241/0.18)]'
-          : 'border-border-subtle hover:border-text-tertiary/50'
-      }`}
-    >
-      <div className="flex items-start justify-between gap-4">
-        <button
-          type="button"
-          onClick={onSelect}
-          aria-pressed={selected}
-          aria-label={`Select ${journal.name}${selected ? ', currently active' : ''}`}
-          className={`flex size-12 items-center justify-center rounded-xl ${color.icon} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300`}
-        >
+    <article className="group relative flex min-h-56 flex-col rounded-xl border border-border-subtle bg-bg-primary p-5 transition-colors hover:border-text-tertiary/50">
+      <Link
+        href={`/journals/${journal.id}`}
+        aria-label={`Open ${journal.name} journal entries`}
+        className="absolute inset-0 z-0 rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-300"
+      />
+      <div className="pointer-events-none relative z-10 flex items-start justify-between gap-4">
+        <span className={`flex size-12 items-center justify-center rounded-xl ${color.icon}`}>
           <Icon size={21} aria-hidden="true" />
-        </button>
-        <div className="flex items-center gap-1 opacity-100 transition-opacity sm:opacity-70 sm:group-hover:opacity-100 sm:group-focus-within:opacity-100">
+        </span>
+        <div className="pointer-events-auto flex items-center gap-1 opacity-100 transition-opacity sm:opacity-70 sm:group-hover:opacity-100 sm:group-focus-within:opacity-100">
           <button
             type="button"
             onClick={onEdit}
@@ -64,26 +56,21 @@ export function JournalCard({ journal, selected, onSelect, onEdit, onDelete }: J
         </div>
       </div>
 
-      <button
-        type="button"
-        onClick={onSelect}
-        aria-pressed={selected}
-        className="mt-4 text-left focus-visible:rounded focus-visible:outline-2 focus-visible:outline-brand-300"
-      >
+      <div className="pointer-events-none relative z-10 mt-4 text-left">
         <span className="flex items-center gap-2">
           <span className="truncate text-lg font-semibold text-text-primary">{journal.name}</span>
-          {selected && (
-            <Check size={15} className="shrink-0 text-brand-300" aria-label="Active journal" />
-          )}
         </span>
         <span className="mt-1 line-clamp-2 min-h-10 text-sm leading-5 text-text-secondary">
           {journal.description || 'A personal space for your memories.'}
         </span>
-      </button>
+      </div>
 
-      <div className="mt-auto flex items-center gap-2 border-t border-border-muted pt-4 text-xs text-text-tertiary">
+      <div className="pointer-events-none relative z-10 mt-auto flex items-center gap-2 border-t border-border-muted pt-4 text-xs text-text-tertiary">
         <CalendarDays size={14} aria-hidden="true" />
         <span>Created {formatDate(journal.createdAt)}</span>
+        <span className="ml-auto text-brand-300 opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">
+          Open journal →
+        </span>
       </div>
     </article>
   );

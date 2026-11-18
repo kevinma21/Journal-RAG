@@ -6,7 +6,9 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import './config/env.js';
 
 async function bootstrap() {
+  console.log('[startup] Creating Nest application');
   const app = await NestFactory.create(AppModule);
+  console.log('[startup] Nest application created');
 
   app.setGlobalPrefix('api');
 
@@ -36,6 +38,8 @@ async function bootstrap() {
 
   app.useGlobalPipes(new StandardSchemaValidationPipe());
 
+  console.log('[startup] Listening for HTTP requests');
   await app.listen(process.env.PORT ?? 3001);
+  console.log(`[startup] API listening on ${process.env.PORT ?? 3001}`);
 }
 await bootstrap();

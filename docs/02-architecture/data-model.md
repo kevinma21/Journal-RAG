@@ -629,7 +629,37 @@ Media Location Embedding AI Data
 
 Derived data must inherit the authorization scope of its source data.
 
-## 8.2 Authorization Rule
+## 8.2 Database Ownership and RLS
+
+The Prisma API uses transaction-local tenant context in addition to its
+existing ownership predicates. `journalpilot_private.current_user_id()` reads
+the verified user ID set by `PrismaService.withUserContext` within the current
+transaction. No context means no matching tenant rows.
+
+RLS coverage follows the ownership relationships:
+
+| Table | Ownership rule |
+| --- | --- |
+| `users` | `id` matches the authenticated user |
+| `journals` | `userId` matches the authenticated user |
+| `journal_entries` | Its journal belongs to the authenticated user |
+| `media`, `locations`, `embeddings` | Their entry's journal belongs to the authenticated user |
+| `ai_processing`, `ai_metadata` | At least one source reference exists, and every non-null entry/media reference belongs to the user |
+| `weekly_reflections` | `userId` matches the authenticated user |
+| `conversations` | `userId` matches the authenticated user and any referenced journal is owned by that user |
+| `messages` | Their conversation belongs to the authenticated user |
+
+Policies use `USING` for visible/updatable/deletable rows and `WITH CHECK` for
+new row values. This prevents inserting or updating a child record so that it
+points to another user's parent. Prisma migration metadata and PostGIS
+reference tables are not tenant data and do not receive user-level policies.
+
+The shared runtime role is trusted to set transaction-local context from the
+verified NestJS request identity. RLS limits the impact of a forgotten Prisma
+ownership predicate, but does not contain arbitrary SQL execution under that
+role. See ADR 0001 for the trade-off and operational requirements.
+
+## 8.3 Authorization Rule
 
 The server must resolve the authenticated user's identity from the authentication context.
 
@@ -645,7 +675,7 @@ Check Journal Ownership
 Access Resource
 ```
 
-## 8.3 RAG Isolation
+## 8.4 RAG Isolation
 
 The vector store must not be treated as a globally searchable memory pool.
 

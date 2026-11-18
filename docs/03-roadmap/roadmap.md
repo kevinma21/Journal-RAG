@@ -595,7 +595,7 @@ Swagger
 - [x] Validate all input
 - [x] Handle expired/invalid sessions
 
-Authentication, session handling, the authenticated API guard, and input validation were verified with focused API and web tests. The Supabase migrations define owner-scoped RLS policies for application tables and a private `journal-media` bucket with per-user object paths; these database and storage requirements are approved at the repository/migration level. The migrations have not been confirmed as applied to the connected Supabase project, and cross-user database/storage access has not been tested against that live project. The API does not yet expose journal or media resources, so application-level ownership enforcement must be exercised when those endpoints are implemented in Phase 2.
+Authentication, session handling, the authenticated API guard, and input validation were verified with focused API and web tests. A Prisma migration defines RLS policies for the direct API runtime role, using transaction-local identity context. It is applied to the connected local development database and verified with the runtime role; the isolated PostgreSQL suite also covers cross-user reads and writes. The remote Supabase project and its Storage policies were not changed or verified here. The API's journal and entry routes use application-level ownership checks and transaction-scoped RLS context; media routes and live cross-user storage access remain for Phase 3.
 
 ## Exit Criteria
 
@@ -620,32 +620,32 @@ Implement the core journaling product before introducing AI.
 
 ## Entry Management
 
-- [ ] Create entry
-- [ ] Edit entry
-- [ ] Delete entry
-- [ ] Restore entry
-- [ ] Permanently delete entry
-- [ ] List entries
-- [ ] View entry
-- [ ] Search/filter basic entries
-- [ ] Store `occurred_at`
-- [ ] Store `created_at`
-- [ ] Store `updated_at`
-- [ ] Support Markdown/rich content
+- [x] Create entry
+- [x] Edit entry
+- [x] Delete entry
+- [x] Restore entry
+- [x] Permanently delete entry
+- [x] List entries
+- [x] View entry
+- [x] Search/filter basic entries
+- [x] Store `occurred_at`
+- [x] Store `created_at`
+- [x] Store `updated_at`
+- [x] Support Markdown/rich content
 
 ## Timeline
 
-- [ ] Chronological timeline
-- [ ] Date filtering
-- [ ] Pagination
-- [ ] Entry detail view
+- [x] Chronological timeline
+- [x] Date filtering
+- [x] Pagination
+- [x] Entry detail view
 
 ## Trash
 
-- [ ] Soft deletion
-- [ ] Trash listing
-- [ ] Restore
-- [ ] Permanent deletion
+- [x] Soft deletion
+- [x] Trash listing
+- [x] Restore
+- [x] Permanent deletion
 
 ## Technologies
 

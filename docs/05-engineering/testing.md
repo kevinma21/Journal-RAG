@@ -1030,6 +1030,35 @@ A user must never be able to cause the AI system to retrieve another user's:
 - reflections;
 - metadata.
 
+## 12.7 PostgreSQL RLS Integration
+
+RLS behavior must be tested against a real PostgreSQL server using the
+non-superuser runtime role. Mocked Prisma calls and compilation do not prove
+that PostgreSQL enforces the policies.
+
+Run the isolated integration suite with:
+
+```bash
+pnpm --filter api test:rls
+```
+
+The command starts a disposable PostgreSQL container, creates minimal tenant
+tables and a non-superuser `journalpilot` role, applies the RLS migration to
+that container, runs the integration tests with a one-connection pool, then
+removes the container. It does not apply migrations to the developer or
+production database.
+
+The suite verifies owner access for two users; denial of cross-user entry
+reads, updates, deletes, and inserts; prevention of moving an owned entry to
+another user's journal; ownership filtering for conversations, messages, and
+embeddings; denial with no user context; and context reset/reuse on a pooled
+connection. API-level ownership tests must continue to pass alongside these
+database tests.
+
+The current worker has no tenant database operations. Before adding any, add
+tests that verify a job can only establish context from a trusted, validated
+job payload and cannot select another tenant's data.
+
 ---
 
 # 13. Data and Migration Testing
