@@ -675,14 +675,18 @@ Turn journal entries into multimodal memories containing images, timestamps, and
 
 ## Image Upload
 
-- [ ] Add media records
-- [ ] Generate signed upload URLs
-- [ ] Direct client upload to Supabase Storage
-- [ ] Validate file type
-- [ ] Validate file size
-- [ ] Store media metadata
-- [ ] Generate secure access URLs
-- [ ] Handle upload failures
+- [x] Add media records
+- [x] Generate signed upload URLs
+- [x] Direct client upload to Supabase Storage
+- [x] Validate file type
+- [x] Validate file size
+- [x] Store media metadata
+- [x] Generate secure access URLs
+- [x] Handle upload failures
+
+Verified against disposable Supabase, PostgreSQL, and Redis services with two
+tenants and in desktop and mobile browser runs. The web editor is opt-in for
+deployment after the media migrations and cleanup worker are configured.
 
 ## Location
 

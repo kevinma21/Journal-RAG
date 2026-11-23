@@ -41,6 +41,10 @@ docker exec -i "$container_name" \
   psql --host 127.0.0.1 --set ON_ERROR_STOP=1 --username postgres --dbname journalpilot_test \
   < "$repo_root/prisma/migrations/20261119100000_prisma_tenant_rls/migration.sql"
 
+docker exec -i "$container_name" \
+  psql --host 127.0.0.1 --set ON_ERROR_STOP=1 --username postgres --dbname journalpilot_test \
+  < "$repo_root/prisma/migrations/20261123193000_media_attachments/migration.sql"
+
 DATABASE_URL="postgresql://journalpilot:journalpilot-rls-test@127.0.0.1:${port}/journalpilot_test" \
 DATABASE_POOL_MAX=1 \
 RLS_ADMIN_DATABASE_URL="postgresql://postgres:${admin_password}@127.0.0.1:${port}/journalpilot_test" \

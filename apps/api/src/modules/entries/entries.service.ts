@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import type {
   CreateJournalEntryInput,
   JournalEntryListQuery,
@@ -8,6 +12,7 @@ import type {
 import type { Prisma } from '../../generated/prisma/client.js';
 
 import { PrismaService } from '../../database/prisma.service.js';
+import { saveEntryMedia, scheduleDeletedEntryUploads } from './entry-media.js';
 
 const DEFAULT_PAGE_SIZE = 25;
 
@@ -143,16 +148,54 @@ export class EntriesService {
 
       if (!journal) throw new NotFoundException('Journal not found');
 
-      const entry = await transaction.journalEntry.create({
-        data: {
-          journalId: journal.id,
-          title: input.title?.trim() || null,
-          content: input.content,
-          occurredAt: input.occurredAt
-            ? new Date(input.occurredAt)
-            : new Date(),
-        },
-      });
+      const data = {
+        journalId: journal.id,
+        title: input.title?.trim() || null,
+        content: input.content,
+        occurredAt: input.occurredAt ? new Date(input.occurredAt) : new Date(),
+      };
+      let entry;
+      if (input.draftId) {
+        const inserted = await transaction.journalEntry.createMany({
+          data: { ...data, id: input.draftId },
+          skipDuplicates: true,
+        });
+        entry = await transaction.journalEntry.findFirst({
+          where: { id: input.draftId, journalId: journal.id, deletedAt: null },
+        });
+        if (!entry) throw new ConflictException('Draft ID is unavailable');
+        if (!inserted.count) {
+          const media = await transaction.media.findMany({
+            where: { entryId: entry.id, deletedAt: null },
+            orderBy: [{ position: 'asc' }, { id: 'asc' }],
+            select: { id: true },
+          });
+          const expected =
+            input.attachmentIds?.map((id) => id.toLowerCase()) ?? [];
+          if (
+            entry.title !== data.title ||
+            entry.content !== data.content ||
+            (input.occurredAt &&
+              entry.occurredAt.getTime() !== data.occurredAt.getTime()) ||
+            media.length !== expected.length ||
+            media.some(({ id }, index) => id !== expected[index])
+          ) {
+            throw new ConflictException(
+              'This draft was already saved. Reload the entry before editing again.',
+            );
+          }
+          return { data: entry };
+        }
+      } else {
+        entry = await transaction.journalEntry.create({ data });
+      }
+      await saveEntryMedia(
+        transaction,
+        userId,
+        entry,
+        input.attachmentIds,
+        true,
+      );
 
       return { data: entry };
     });
@@ -166,8 +209,12 @@ export class EntriesService {
         journal: { is: { userId, deletedAt: null } },
       };
       const result = await transaction.journalEntry.updateMany({
-        where,
+        where: {
+          ...where,
+          ...(input.revision !== undefined ? { revision: input.revision } : {}),
+        },
         data: {
+          revision: { increment: 1 },
           ...(input.title !== undefined
             ? { title: input.title?.trim() || null }
             : {}),
@@ -178,9 +225,29 @@ export class EntriesService {
         },
       });
 
-      if (result.count === 0) throw new NotFoundException('Entry not found');
+      if (result.count === 0) {
+        if (
+          input.revision !== undefined &&
+          (await transaction.journalEntry.findFirst({
+            where,
+            select: { id: true },
+          }))
+        ) {
+          throw new ConflictException(
+            'This entry changed. Reload it before applying your edits.',
+          );
+        }
+        throw new NotFoundException('Entry not found');
+      }
 
       const entry = await transaction.journalEntry.findFirstOrThrow({ where });
+      await saveEntryMedia(
+        transaction,
+        userId,
+        entry,
+        input.attachmentIds,
+        input.content !== undefined || input.attachmentIds !== undefined,
+      );
       return { data: entry };
     });
   }
@@ -234,6 +301,7 @@ export class EntriesService {
 
       if (result.count === 0)
         throw new NotFoundException('Entry not found in Trash');
+      await scheduleDeletedEntryUploads(transaction, id);
     });
   }
 }

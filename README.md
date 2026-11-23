@@ -176,3 +176,20 @@ Check workspace packages:
 ```bash
 pnpm -r list --depth -1
 ```
+
+### Image attachments
+
+Apply the media migrations to the application database and the private Supabase
+Storage bucket before enabling the editor controls. The Prisma migration creates
+the non-login PostgreSQL role `journalpilot_media_cleanup`. Grant it to a
+dedicated worker login and configure these variables in the worker process.
+
+- `MEDIA_CLEANUP_DATABASE_URL` for the dedicated cleanup login
+- `REDIS_URL` for the same BullMQ Redis instance used by the API
+- `SUPABASE_URL` and `SUPABASE_SECRET_KEY` for private Storage cleanup
+- `SUPABASE_SECRET_KEY` also belongs in the API runtime for media verification
+  and URL signing
+
+After verifying the API and worker in the target environment, set
+`NEXT_PUBLIC_MEDIA_ATTACHMENTS=true` and rebuild the web app. The editor accepts
+up to 12 JPEG, PNG, or WebP photos per entry, at most 6 MiB per file.

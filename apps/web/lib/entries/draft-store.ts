@@ -19,7 +19,22 @@ export function readDraft(key: string) {
       return null;
     }
 
-    return value as EntryDraft;
+    const { draftId, baseRevision, attachments } = value;
+    return {
+      title: value.title,
+      content: value.content,
+      occurredAt: value.occurredAt,
+      savedAt: value.savedAt,
+      draftId: typeof draftId === 'string' ? draftId : undefined,
+      baseRevision: Number.isInteger(baseRevision) ? baseRevision : undefined,
+      attachments:
+        Array.isArray(attachments?.ids) &&
+        attachments.ids.every((id) => typeof id === 'string') &&
+        Array.isArray(attachments.stagedIds) &&
+        attachments.stagedIds.every((id) => typeof id === 'string')
+          ? attachments
+          : undefined,
+    };
   } catch {
     return null;
   }

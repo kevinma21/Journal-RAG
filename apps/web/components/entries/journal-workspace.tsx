@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { apiFetch } from '@/lib/api/client';
 import { getApiError, getNetworkError } from '@/lib/journals/http-error';
 import type { Journal } from '@/lib/journals/types';
+import { mediaAttachmentsEnabled, type AttachmentDraft } from '@/lib/entries/media';
 import { clearDraft, entryDraftKey, readDraft, saveDraft } from '@/lib/entries/draft-store';
 import type {
   EntryFormValues,
@@ -61,13 +62,22 @@ export function JournalWorkspace({
   const [localDraftAvailable, setLocalDraftAvailable] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const editorValues = useRef(values);
+  const editorAttachments = useRef<AttachmentDraft | undefined>(undefined);
+  const [editor, setEditor] = useState<{
+    key: string;
+    entry: JournalEntry | null;
+    draftId: string;
+    baseRevision?: number;
+    attachments?: AttachmentDraft;
+  }>();
   const [actionError, setActionError] = useState<string | null>(null);
   const filterKey = `${query}\u0000${from}\u0000${to}\u0000${page}\u0000${isTrash}`;
   const previousFilterKey = useRef(filterKey);
 
   const draftKey = useMemo(
-    () => entryDraftKey(journal.id, view === 'editor' ? (selected?.id ?? null) : null),
-    [journal.id, selected?.id, view],
+    () => entryDraftKey(journal.id, view === 'editor' ? (editor?.entry?.id ?? null) : null),
+    [journal.id, editor?.entry?.id, view],
   );
 
   const loadEntries = useCallback(
@@ -114,10 +124,41 @@ export function JournalWorkspace({
     return () => window.clearTimeout(timeout);
   }, [filterKey, isTrash, loadEntries, page, query]);
 
+  function saveLocalDraft(nextValues: EntryFormValues) {
+    setHasLocalDraft(
+      saveDraft(draftKey, {
+        ...nextValues,
+        draftId: editor?.draftId,
+        baseRevision: editor?.baseRevision,
+        attachments: editorAttachments.current,
+      }),
+    );
+  }
+
   function updateValues(nextValues: EntryFormValues) {
+    editorValues.current = nextValues;
     setValues(nextValues);
     setLocalDraftAvailable(false);
-    setHasLocalDraft(saveDraft(draftKey, nextValues));
+    saveLocalDraft(nextValues);
+  }
+
+  function updateAttachments(attachments?: AttachmentDraft) {
+    editorAttachments.current = attachments;
+    saveLocalDraft(editorValues.current);
+  }
+
+  function openEditor(
+    entry: JournalEntry | null,
+    nextValues: EntryFormValues,
+    draftId: string,
+    baseRevision?: number,
+    attachments?: AttachmentDraft,
+  ) {
+    editorValues.current = nextValues;
+    editorAttachments.current = attachments;
+    setValues(nextValues);
+    setEditor({ key: crypto.randomUUID(), entry, draftId, baseRevision, attachments });
+    setView('editor');
   }
 
   function beginNew() {
@@ -127,11 +168,16 @@ export function JournalWorkspace({
       ? { title: stored.title, content: stored.content, occurredAt: stored.occurredAt }
       : { title: '', content: '', occurredAt: localDateTime() };
     setSelected(null);
-    setValues(initialValues);
+    openEditor(
+      null,
+      initialValues,
+      stored?.draftId ?? crypto.randomUUID(),
+      undefined,
+      stored?.attachments,
+    );
     setHasLocalDraft(Boolean(stored));
     setLocalDraftAvailable(Boolean(stored));
     setSaveError(null);
-    setView('editor');
   }
 
   function beginEdit(entry: JournalEntry) {
@@ -139,15 +185,18 @@ export function JournalWorkspace({
     const stored = readDraft(key);
     const isNewerDraft = Boolean(stored && stored.savedAt > entry.updatedAt);
     setSelected(entry);
-    setValues(
+    openEditor(
+      entry,
       isNewerDraft && stored
         ? { title: stored.title, content: stored.content, occurredAt: stored.occurredAt }
         : fromEntry(entry),
+      entry.id,
+      isNewerDraft ? (stored?.baseRevision ?? entry.revision) : entry.revision,
+      isNewerDraft ? stored?.attachments : undefined,
     );
     setHasLocalDraft(isNewerDraft);
     setLocalDraftAvailable(isNewerDraft);
     setSaveError(null);
-    setView('editor');
   }
 
   function selectEntry(entry: JournalEntry) {
@@ -156,12 +205,12 @@ export function JournalWorkspace({
     setActionError(null);
   }
 
-  async function saveEntry() {
+  async function saveEntry(attachmentIds?: string[]) {
     setIsSaving(true);
     setSaveError(null);
     try {
-      const editing = Boolean(selected && !isTrash);
-      const path = editing ? `/v1/entries/${selected!.id}` : '/v1/entries';
+      const editing = editor?.entry;
+      const path = editing ? `/v1/entries/${editing.id}` : '/v1/entries';
       const response = await apiFetch(path, {
         method: editing ? 'PATCH' : 'POST',
         body: JSON.stringify({
@@ -169,6 +218,12 @@ export function JournalWorkspace({
           title: values.title.trim() || null,
           content: values.content,
           occurredAt: new Date(values.occurredAt).toISOString(),
+          ...(mediaAttachmentsEnabled && editor
+            ? {
+                ...(editing ? { revision: editor.baseRevision } : { draftId: editor.draftId }),
+                attachmentIds,
+              }
+            : {}),
         }),
       });
       if (!response.ok) throw new Error(await getApiError(response));
@@ -232,6 +287,7 @@ export function JournalWorkspace({
         <button
           type="button"
           onClick={beginNew}
+          aria-label="New entry"
           className="inline-flex h-9 items-center gap-2 rounded-lg bg-brand-500 px-3 text-sm font-semibold text-white hover:bg-brand-600"
         >
           <Plus size={16} /> <span className="hidden sm:inline">New entry</span>
@@ -343,9 +399,18 @@ export function JournalWorkspace({
           />
         </aside>
         <main className={`min-w-0 flex-1 ${view === 'empty' ? 'hidden md:flex' : 'flex'}`}>
-          {view === 'editor' ? (
+          {view === 'editor' && editor ? (
             <EntryEditor
-              entry={selected}
+              key={editor.key}
+              entry={editor.entry}
+              journalId={journal.id}
+              draftId={editor.draftId}
+              initialAttachments={editor.attachments}
+              onAttachmentsChange={updateAttachments}
+              onDiscard={() => {
+                clearDraft(draftKey);
+                setView(selected ? 'reader' : 'empty');
+              }}
               values={values}
               hasLocalDraft={hasLocalDraft}
               localDraftAvailable={localDraftAvailable}
@@ -358,6 +423,7 @@ export function JournalWorkspace({
             />
           ) : view === 'reader' && selected ? (
             <EntryReader
+              key={`${selected.id}:${selected.updatedAt}`}
               entry={selected}
               isTrash={isTrash}
               onEdit={() => beginEdit(selected)}

@@ -1,4 +1,5 @@
 import type { Journal } from '@/lib/journals/types';
+import type { AttachmentDraft } from './media';
 
 export type JournalEntry = {
   id: string;
@@ -9,6 +10,7 @@ export type JournalEntry = {
   createdAt: string;
   updatedAt: string;
   deletedAt: string | null;
+  revision: number;
 };
 
 export type EntryPagination = {
@@ -28,6 +30,9 @@ export type EntryDraft = {
   content: string;
   occurredAt: string;
   savedAt: string;
+  draftId?: string;
+  baseRevision?: number;
+  attachments?: AttachmentDraft;
 };
 
 export type EntryFormValues = {

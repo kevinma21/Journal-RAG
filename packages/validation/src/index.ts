@@ -40,23 +40,48 @@ const journalEntryTitleSchema = z.string().trim().max(500).nullable().optional()
 const journalEntryContentSchema = z.string().trim().min(1).max(100_000);
 const occurredAtSchema = z.iso.datetime({ offset: true });
 
-export const createJournalEntrySchema = z.object({
-  journalId: z.uuid(),
-  title: journalEntryTitleSchema,
-  content: journalEntryContentSchema,
-  occurredAt: occurredAtSchema.optional(),
-});
+export const maxEntryAttachments = 12;
+const attachmentIdsSchema = z
+  .array(z.uuid())
+  .max(maxEntryAttachments)
+  .refine(
+    (ids) => new Set(ids.map((id) => id.toLowerCase())).size === ids.length,
+    'Duplicate attachment.',
+  );
+
+export const createJournalEntrySchema = z
+  .object({
+    draftId: z.uuid().optional(),
+    attachmentIds: attachmentIdsSchema.optional(),
+    journalId: z.uuid(),
+    title: journalEntryTitleSchema,
+    content: journalEntryContentSchema,
+    occurredAt: occurredAtSchema.optional(),
+  })
+  .refine(
+    (value) => !value.attachmentIds?.length || value.draftId,
+    'Provide a draft ID for attachments.',
+  );
 
 export const updateJournalEntrySchema = z
   .object({
+    attachmentIds: attachmentIdsSchema.optional(),
+    revision: z.number().int().nonnegative().optional(),
     title: journalEntryTitleSchema,
     content: journalEntryContentSchema.optional(),
     occurredAt: occurredAtSchema.optional(),
   })
   .refine(
     (value) =>
-      value.title !== undefined || value.content !== undefined || value.occurredAt !== undefined,
+      value.title !== undefined ||
+      value.content !== undefined ||
+      value.occurredAt !== undefined ||
+      value.attachmentIds !== undefined,
     'Provide an entry field to update.',
+  )
+  .refine(
+    (value) => value.attachmentIds === undefined || value.revision !== undefined,
+    'Provide the entry revision for attachment changes.',
   );
 
 export const journalEntryListQuerySchema = z
@@ -84,3 +109,24 @@ export type CreateJournalEntryInput = z.infer<typeof createJournalEntrySchema>;
 export type UpdateJournalEntryInput = z.infer<typeof updateJournalEntrySchema>;
 export type JournalEntryListQuery = z.infer<typeof journalEntryListQuerySchema>;
 export type JournalEntryTrashQuery = z.infer<typeof journalEntryTrashQuerySchema>;
+
+export {
+  mediaMarkdown,
+  mediaReferenceId,
+  mediaReferences,
+  removeMediaReference,
+} from './media-markdown.js';
+
+export const maxImageBytes = 6 * 1024 * 1024;
+export const imageMimeTypes = ['image/jpeg', 'image/png', 'image/webp'] as const;
+
+export const reserveMediaUploadSchema = z.object({
+  uploadId: z.uuid(),
+  targetEntryId: z.uuid(),
+  target: z.enum(['draft', 'entry']),
+  fileName: z.string().trim().min(1).max(500),
+  mimeType: z.enum(imageMimeTypes),
+  fileSize: z.number().int().positive().max(maxImageBytes),
+});
+
+export type ReserveMediaUploadInput = z.infer<typeof reserveMediaUploadSchema>;

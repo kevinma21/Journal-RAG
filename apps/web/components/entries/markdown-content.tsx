@@ -1,14 +1,46 @@
+/* eslint-disable @next/next/no-img-element -- Load private URLs directly without Next image caching. */
 'use client';
 
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdown, { defaultUrlTransform } from 'react-markdown';
+import { mediaReferenceId } from '@journalpilot/validation';
+import type { EntryAttachment } from '@/lib/entries/media';
 import remarkGfm from 'remark-gfm';
 
-export function MarkdownContent({ content }: { content: string }) {
+export function MarkdownContent({
+  content,
+  attachments = [],
+}: {
+  content: string;
+  attachments?: EntryAttachment[];
+}) {
+  const media = new Map(attachments.map((item) => [item.id, item.url]));
   return (
     <div className="entry-markdown text-base leading-7 text-text-primary">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
+        urlTransform={(url, key, node) =>
+          key === 'src' && node.tagName === 'img' && mediaReferenceId(url) !== null
+            ? url
+            : defaultUrlTransform(url)
+        }
         components={{
+          img: ({ src, alt, title }) => {
+            const id = typeof src === 'string' ? mediaReferenceId(src) : null;
+            if (id === null) return <img src={src} alt={alt ?? ''} title={title} />;
+            const url = media.get(id);
+            return url ? (
+              <img
+                src={url}
+                alt={alt ?? ''}
+                referrerPolicy="no-referrer"
+                className="my-2 max-h-[34rem] max-w-full rounded-xl object-contain"
+              />
+            ) : (
+              <span className="text-sm text-text-tertiary">
+                Photo unavailable{alt ? ` (${alt})` : ''}
+              </span>
+            );
+          },
           h1: ({ children }) => (
             <h1 className="mb-5 mt-8 text-3xl font-semibold tracking-tight first:mt-0">
               {children}

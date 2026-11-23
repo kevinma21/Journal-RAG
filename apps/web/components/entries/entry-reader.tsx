@@ -2,6 +2,9 @@
 
 import { ArrowLeft, FileEdit, RotateCcw, Trash2 } from 'lucide-react';
 
+import { useEffect, useState } from 'react';
+import { loadEntryMedia, mediaAttachmentsEnabled, type EntryAttachment } from '@/lib/entries/media';
+import { AttachmentGallery } from './attachment-gallery';
 import type { JournalEntry } from '@/lib/entries/types';
 import { MarkdownContent } from './markdown-content';
 
@@ -28,6 +31,35 @@ export function EntryReader({
   onPermanentlyDelete,
   onBackToList,
 }: EntryReaderProps) {
+  const [media, setMedia] = useState<EntryAttachment[]>([]);
+  const [loadingPhotos, setLoadingPhotos] = useState(mediaAttachmentsEnabled);
+  const [photoError, setPhotoError] = useState(false);
+  const [reload, setReload] = useState(0);
+
+  useEffect(() => {
+    if (!mediaAttachmentsEnabled) return;
+    const controller = new AbortController();
+    async function load() {
+      try {
+        const gallery = await loadEntryMedia(entry.id, controller.signal);
+        if (!controller.signal.aborted) {
+          setMedia(gallery);
+          setPhotoError(false);
+        }
+      } catch {
+        if (!controller.signal.aborted) setPhotoError(true);
+      } finally {
+        if (!controller.signal.aborted) setLoadingPhotos(false);
+      }
+    }
+    void load();
+    const timer = window.setInterval(() => void load(), 4 * 60_000);
+    return () => {
+      controller.abort();
+      window.clearInterval(timer);
+    };
+  }, [entry.id, reload]);
+
   return (
     <div className="flex min-h-0 flex-1 flex-col">
       <header className="flex shrink-0 items-center justify-between gap-3 border-b border-border-muted px-5 py-3 sm:px-8">
@@ -110,7 +142,25 @@ export function EntryReader({
               </>
             )}
           </div>
-          <MarkdownContent content={entry.content} />
+          {loadingPhotos && (
+            <p role="status" className="mb-4 text-xs text-text-tertiary">
+              Loading photos…
+            </p>
+          )}
+          {photoError && (
+            <p role="alert" className="mb-4 text-xs text-error-500">
+              Photos could not be loaded.
+              <button
+                type="button"
+                onClick={() => setReload((count) => count + 1)}
+                className="ml-2 text-brand-300"
+              >
+                Retry
+              </button>
+            </p>
+          )}
+          <AttachmentGallery items={media.map((item) => ({ ...item, status: 'ready' }))} />
+          <MarkdownContent content={entry.content} attachments={media} />
         </div>
       </article>
     </div>

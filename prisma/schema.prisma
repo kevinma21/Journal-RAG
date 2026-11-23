@@ -23,6 +23,13 @@ enum MediaProcessingStatus {
   FAILED
 }
 
+enum MediaUploadState {
+  PENDING
+  READY
+  ATTACHED
+  CLEANUP_PENDING
+}
+
 enum AIProcessingStatus {
   QUEUED
   PROCESSING
@@ -91,6 +98,7 @@ model JournalEntry {
   createdAt  DateTime  @default(now()) @db.Timestamptz(3)
   updatedAt  DateTime  @updatedAt @db.Timestamptz(3)
   deletedAt  DateTime? @db.Timestamptz(3)
+  revision   Int       @default(0)
 
   journal      Journal        @relation(fields: [journalId], references: [id], onDelete: Cascade)
   media        Media[]
@@ -108,10 +116,11 @@ model JournalEntry {
 model Media {
   id               String                @id @default(uuid()) @db.Uuid
   entryId          String                @db.Uuid
-  storagePath      String                @db.Text
+  storagePath      String                @unique @db.Text
   mimeType         String                @db.VarChar(255)
   fileName         String?               @db.VarChar(500)
   fileSize         Int?
+  position         Int                   @default(0)
   processingStatus MediaProcessingStatus @default(QUEUED)
   createdAt        DateTime              @default(now()) @db.Timestamptz(3)
   deletedAt        DateTime?             @db.Timestamptz(3)
@@ -123,6 +132,29 @@ model Media {
   @@index([entryId])
   @@index([entryId, deletedAt])
   @@map("media")
+}
+
+model MediaUpload {
+  id                    String           @id @db.Uuid
+  userId                String           @db.Uuid
+  journalId             String           @db.Uuid
+  // The target may be a draft UUID. Keep the upload record after entry deletion.
+  targetEntryId         String           @db.Uuid
+  storagePath           String           @unique @db.Text
+  fileName              String           @db.VarChar(500)
+  mimeType              String           @db.VarChar(255)
+  fileSize              Int
+  state                 MediaUploadState @default(PENDING)
+  createdAt             DateTime         @default(now()) @db.Timestamptz(3)
+  expiresAt             DateTime         @db.Timestamptz(3)
+  uploadTokenValidUntil DateTime         @db.Timestamptz(3)
+  nextCleanupAt         DateTime?        @db.Timestamptz(3)
+
+  @@index([userId, state])
+  @@index([targetEntryId, state])
+  @@index([state, expiresAt])
+  @@index([state, nextCleanupAt])
+  @@map("media_uploads")
 }
 
 model Location {

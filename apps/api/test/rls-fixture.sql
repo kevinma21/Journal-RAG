@@ -26,7 +26,8 @@ CREATE TABLE public.journal_entries (
 
 CREATE TABLE public.media (
   id uuid PRIMARY KEY,
-  "entryId" uuid NOT NULL REFERENCES public.journal_entries(id)
+  "entryId" uuid NOT NULL REFERENCES public.journal_entries(id),
+  "storagePath" text NOT NULL
 );
 
 CREATE TABLE public.locations (

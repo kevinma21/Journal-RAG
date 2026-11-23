@@ -1,3 +1,4 @@
+import { randomUUID } from 'node:crypto';
 import { Client } from 'pg';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
@@ -207,5 +208,51 @@ describe('PostgreSQL RLS through Prisma transactions', () => {
 
     expect(results[0].map((row) => row.id)).toEqual([journalA]);
     expect(results[1].map((row) => row.id)).toEqual([journalB]);
+  });
+  it('authorizes a reservation for an unsaved draft and isolates it from other tenants', async () => {
+    const id = randomUUID();
+    const targetEntryId = randomUUID();
+    const storagePath = `${userA}/${journalA}/${randomUUID()}`;
+    const reservation = {
+      id,
+      userId: userA,
+      journalId: journalA,
+      targetEntryId,
+      storagePath,
+      fileName: 'photo.png',
+      fileSize: 123,
+      mimeType: 'image/png',
+      expiresAt: new Date(Date.now() + 86_400_000),
+      uploadTokenValidUntil: new Date(),
+    };
+
+    await prisma.withUserContext(userA, async (tx) => {
+      await expect(
+        tx.mediaUpload.create({ data: reservation }),
+      ).resolves.toMatchObject({ id, targetEntryId });
+    });
+    await prisma.withUserContext(userB, async (tx) => {
+      expect(await tx.mediaUpload.findUnique({ where: { id } })).toBeNull();
+      expect(
+        (
+          await tx.mediaUpload.updateMany({
+            where: { id },
+            data: { state: 'READY' },
+          })
+        ).count,
+      ).toBe(0);
+    });
+    await expect(
+      prisma.withUserContext(userB, (tx) =>
+        tx.mediaUpload.create({
+          data: {
+            ...reservation,
+            id: randomUUID(),
+            userId: userB,
+            storagePath: randomUUID(),
+          },
+        }),
+      ),
+    ).rejects.toThrow();
   });
 });
